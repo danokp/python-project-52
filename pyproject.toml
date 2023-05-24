@@ -11,6 +11,8 @@ python = "^3.10"
 django = "^4.2.1"
 gunicorn = "^20.1.0"
 python-dotenv = "^1.0.0"
+django-bootstrap4 = "^23.1"
+bootstrap4 = "^0.1.0"
 
 
 [tool.poetry.group.dev.dependencies]
