@@ -1,0 +1,8 @@
+{% load i18n %}
+{% load bootstrap4 %}
+
+<form method="post">
+    {% csrf_token %}
+    {% bootstrap_form form %}
+    {% bootstrap_button button_text button_type="submit" button_class="btn btn-primary" %}
+</form>

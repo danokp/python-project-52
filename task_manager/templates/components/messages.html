@@ -1,7 +1,4 @@
-{% for message in messages %}
-  <div class="alert {{ message.tags }} alert-dismissible fade show" role="alert" >
-    <button type="button" class="close" data-dismiss="alert" aria-label="close">
-      <span aria-hidden="True">&times;</span></button>
-    {{ message }}
-  </div>
-{% endfor %}
+{% load bootstrap4 %}
+
+{% bootstrap_javascript jquery=True %}
+{% bootstrap_messages %}

@@ -9,12 +9,10 @@
     <meta name="description" content="">
     <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
     <meta name="generator" content="Jekyll v4.1.1">
-    <title>{% block title %}#{% endblock %}</title>
+    <title>{% block title %}{% trans 'Task manager Hexlet' %}{% endblock %}</title>
 
     {% load bootstrap4 %}
     {% bootstrap_css %}
-    {% bootstrap_javascript jquery='full' %}
-    {% bootstrap_messages %}
   </head>
   <body class="d-flex flex-column min-vh-100 vsc-initialized">
     <header>
