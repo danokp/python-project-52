@@ -17,6 +17,8 @@ bootstrap4 = "^0.1.0"
 
 [tool.poetry.group.dev.dependencies]
 flake8 = "^6.0.0"
+django-extensions = "^3.2.1"
+ipython = "^8.13.2"
 
 [build-system]
 requires = ["poetry-core"]
