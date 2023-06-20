@@ -427,6 +427,17 @@ files = [
 plugins = ["importlib-metadata"]
 
 [[package]]
+name = "pysqlite3"
+version = "0.5.0"
+description = "DB-API 2.0 interface for Sqlite 3.x"
+category = "dev"
+optional = false
+python-versions = "*"
+files = [
+    {file = "pysqlite3-0.5.0.tar.gz", hash = "sha256:3bbddd291e21c83670034f17a13edd0e0ef6ef1a53764ecdcb322d36d7302287"},
+]
+
+[[package]]
 name = "python-dotenv"
 version = "1.0.0"
 description = "Read key-value pairs from a .env file and set them as environment variables"
@@ -562,4 +573,4 @@ files = [
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.10"
-content-hash = "d4fb59fb6ccdd78ac8a3743b2a80c23984bc25479d699dd16ce6df953bb46604"
+content-hash = "109f7c77a1dd49eddb5e5c60c41f1a234367b91c7b98b110244c4e721f62f336"
