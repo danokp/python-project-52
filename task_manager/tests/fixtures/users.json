@@ -1,0 +1,20 @@
+[
+{
+    "model": "users.user",
+    "pk": 1,
+    "fields": {
+        "password": "pbkdf2_sha256$600000$brIwoPTuZhdtzQ1Ukcz6y1$qNRaRfCCiWNE96Qps2rhzX70CJubW50g74AkcPrD/5s=",
+        "last_login": null,
+        "is_superuser": false,
+        "username": "ring.bearer",
+        "first_name": "Frodo",
+        "last_name": "Baggins",
+        "email": "",
+        "is_staff": false,
+        "is_active": true,
+        "date_joined": "2023-06-20T16:23:26.129Z",
+        "groups": [],
+        "user_permissions": []
+    }
+}
+]
