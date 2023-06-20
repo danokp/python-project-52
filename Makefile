@@ -15,3 +15,9 @@ runserver:
 
 shell:
 	@$(MANAGE) shell_plus --ipython
+
+test:
+	@$(MANAGE) test
+
+user_fixture:
+	@$(MANAGE) dumpdata users.User --indent 4 >> users.json
