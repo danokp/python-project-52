@@ -62,7 +62,9 @@ class UserUpdateView(UserAccessMixin, View):
         )
 
     def post(self, request, *args, **kwargs):
-        form = UserRegistrationForm(request.POST)
+        user_id = kwargs.get('pk')
+        user = User.objects.get(id=user_id)
+        form = UserRegistrationForm(request.POST, instance=user)
         if form.is_valid():
             messages.success(request, _('The user has been updated successfully'))
             form.save()
