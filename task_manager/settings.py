@@ -36,6 +36,7 @@ DEBUG = os.getenv('DEBUG', False)
 ALLOWED_HOSTS = [
     '*',
     'webserver',
+    'task-manager-pd.up.railway.app',
 ]
 
 
