@@ -4,6 +4,7 @@
 
 {% block content %}
 <h1 class="my-4">{% trans 'Statuses' %}</h1>
+<a class="nav-link" href="{% url 'create_status' %}">{% trans 'Create status' %}</a>
 <table class="table table-striped">
   <thead>
     <tr>
