@@ -1,26 +1,34 @@
 from django.shortcuts import render
 from django.views import View
 
+from task_manager.statuses.models import Status
+
 
 class StatusView(View):
     '''Show list of statuses.'''
 
-    pass
+    def get(self, request, *args, **kwargs):
+        statuses = Status.objects.all()
+        return render(
+            request,
+            'statuses/show_statuses.html',
+            context={'statuses': statuses},
+        )
 
 
 class StatusCreateView(View):
-    '''Show list of statuses.'''
+    '''Create new status.'''
 
     pass
 
 
 class StatusUpdateView(View):
-    '''Show list of statuses.'''
+    '''Update status.'''
 
     pass
 
 
 class StatusDeleteView(View):
-    '''Show list of statuses.'''
+    '''Delete status.'''
 
     pass
