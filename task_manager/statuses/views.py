@@ -80,4 +80,20 @@ class StatusUpdateView(View):
 class StatusDeleteView(View):
     '''Delete status.'''
 
-    pass
+    def get(self, request, *args, **kwargs):
+        status_id = kwargs.get('pk')
+        status = Status.objects.get(id=status_id)
+        button_text = _('Delete')
+        return render(
+            request,
+            'statuses/delete_status.html',
+            context={'status': status, 'button_text': button_text}
+        )
+
+    def post(self, request, *args, **kwargs):
+        status_id = kwargs.get('pk')
+        status = Status.objects.get(id=status_id)
+        if status:
+            messages.success(request, _('Статус успешно удален'))
+            status.delete()
+        return redirect('show_statuses')
