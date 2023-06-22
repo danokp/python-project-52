@@ -3,11 +3,12 @@ from django.views import View
 from django.utils.translation import gettext as _
 from django.contrib import messages
 
+from .mixin import UserLoginRequiredMixin
 from .models import Status
 from .forms import StatusCreationForm
 
 
-class StatusView(View):
+class StatusView(UserLoginRequiredMixin, View):
     '''Show list of statuses.'''
 
     def get(self, request, *args, **kwargs):
@@ -19,7 +20,7 @@ class StatusView(View):
         )
 
 
-class StatusCreateView(View):
+class StatusCreateView(UserLoginRequiredMixin, View):
     '''Create new status.'''
 
     def get(self, request, *args, **kwargs):
@@ -46,7 +47,7 @@ class StatusCreateView(View):
         )
 
 
-class StatusUpdateView(View):
+class StatusUpdateView(UserLoginRequiredMixin, View):
     '''Update status.'''
 
     def get(self, request, *args, **kwargs):
@@ -77,7 +78,7 @@ class StatusUpdateView(View):
         )
 
 
-class StatusDeleteView(View):
+class StatusDeleteView(UserLoginRequiredMixin, View):
     '''Delete status.'''
 
     def get(self, request, *args, **kwargs):
