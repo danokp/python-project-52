@@ -21,3 +21,9 @@ test:
 
 user_fixture:
 	@$(MANAGE) dumpdata users.User --indent 4 >> users.json
+
+i18n_makemessages_ru:
+	poetry run django-admin makemessages -l ru
+
+i18n_compilemessages:
+	poetry run django-admin compilemessages

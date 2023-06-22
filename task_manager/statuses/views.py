@@ -36,7 +36,7 @@ class StatusCreateView(View):
         button_text = _('Create')
 
         if form.is_valid():
-            messages.success(request, _('Статус успешно создан'))
+            messages.success(request, _('Status created successfully'))
             form.save()
             return redirect('show_statuses')
         return render(
@@ -66,7 +66,7 @@ class StatusUpdateView(View):
         form = StatusCreationForm(request.POST, instance=status)
 
         if form.is_valid():
-            messages.success(request, _('Статус успешно изменен'))
+            messages.success(request, _('Status updated successfully'))
             form.save()
             return redirect('show_statuses')
         button_text = _('Update')
@@ -94,6 +94,6 @@ class StatusDeleteView(View):
         status_id = kwargs.get('pk')
         status = Status.objects.get(id=status_id)
         if status:
-            messages.success(request, _('Статус успешно удален'))
+            messages.success(request, _('Status deleted'))
             status.delete()
         return redirect('show_statuses')

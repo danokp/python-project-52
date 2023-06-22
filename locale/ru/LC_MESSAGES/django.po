@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-06-08 18:15+0400\n"
+"POT-Creation-Date: 2023-06-22 21:10+0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -20,13 +20,47 @@ msgstr ""
 "n%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || "
 "(n%100>=11 && n%100<=14)? 2 : 3);\n"
 
-#: task_manager/settings.py:139
+#: task_manager/settings.py:147
 msgid "Russian"
-msgstr ""
+msgstr "Русский"
 
-#: task_manager/settings.py:140
+#: task_manager/settings.py:148
 msgid "English"
-msgstr ""
+msgstr "Английский"
+
+#: task_manager/statuses/forms.py:8
+#: task_manager/templates/statuses/show_statuses.html:12
+msgid "Name"
+msgstr "Имя"
+
+#: task_manager/statuses/views.py:27 task_manager/statuses/views.py:36
+msgid "Create"
+msgstr "Создать"
+
+#: task_manager/statuses/views.py:39
+msgid "Status created successfully"
+msgstr "Статус успешно изменён"
+
+#: task_manager/statuses/views.py:56 task_manager/statuses/views.py:72
+#: task_manager/users/views.py:57 task_manager/users/views.py:72
+msgid "Update"
+msgstr "Изменить"
+
+#: task_manager/statuses/views.py:69
+msgid "Status updated successfully"
+msgstr "Статус успешно изменён"
+
+#: task_manager/statuses/views.py:86
+#: task_manager/templates/statuses/delete_status.html:10
+#: task_manager/templates/statuses/show_statuses.html:26
+#: task_manager/templates/users/delete_user.html:10
+#: task_manager/templates/users/show_users.html:27
+msgid "Delete"
+msgstr "Удалить"
+
+#: task_manager/statuses/views.py:97
+msgid "Status deleted"
+msgstr "Статус успешно удален"
 
 #: task_manager/templates/base.html:12 task_manager/templates/index.html:5
 msgid "Task manager Hexlet"
@@ -42,6 +76,7 @@ msgid "Users"
 msgstr "Пользователи"
 
 #: task_manager/templates/components/navbar.html:16
+#: task_manager/templates/statuses/show_statuses.html:6
 msgid "Statuses"
 msgstr "Статусы"
 
@@ -80,6 +115,35 @@ msgstr "Практические курсы по программировани�
 msgid "More information"
 msgstr "Узнать больше"
 
+#: task_manager/templates/statuses/create_status.html:6
+#: task_manager/templates/statuses/show_statuses.html:7
+msgid "Create status"
+msgstr "Создание статуса"
+
+#: task_manager/templates/statuses/delete_status.html:6
+#, fuzzy
+#| msgid "Delete user"
+msgid "Delete status"
+msgstr "Удаление статуса"
+
+#: task_manager/templates/statuses/delete_status.html:7
+#: task_manager/templates/users/delete_user.html:7
+msgid "Are you sure you want to delete"
+msgstr "Вы уверены, что хотите удалить"
+
+#: task_manager/templates/statuses/show_statuses.html:13
+msgid "Creation date"
+msgstr "Дата создания"
+
+#: task_manager/templates/statuses/show_statuses.html:24
+#: task_manager/templates/users/show_users.html:25
+msgid "Edit"
+msgstr "Изменить"
+
+#: task_manager/templates/statuses/update_status.html:6
+msgid "Update status"
+msgstr "Изменение статуса"
+
 #: task_manager/templates/users/create_user.html:6
 msgid "Registration"
 msgstr "Регистрация"
@@ -87,15 +151,6 @@ msgstr "Регистрация"
 #: task_manager/templates/users/delete_user.html:6
 msgid "Delete user"
 msgstr "Удаление пользователя"
-
-#: task_manager/templates/users/delete_user.html:7
-msgid "Are you sure you want to delete"
-msgstr "Вы уверены, что хотите удалить"
-
-#: task_manager/templates/users/delete_user.html:10
-#: task_manager/templates/users/show_users.html:27
-msgid "Delete"
-msgstr "Удалить"
 
 #: task_manager/templates/users/show_users.html:11
 msgid "Username"
@@ -108,10 +163,6 @@ msgstr "Полное имя"
 #: task_manager/templates/users/show_users.html:13
 msgid "Registration date"
 msgstr "Дата создания"
-
-#: task_manager/templates/users/show_users.html:25
-msgid "Edit"
-msgstr "Изменить"
 
 #: task_manager/templates/users/update_user.html:6
 msgid "Edit profile"
@@ -129,15 +180,11 @@ msgstr "У вас нет прав для изменения другого по�
 msgid "The user has been registered successfully"
 msgstr "Пользователь успешно зарегистрирован"
 
-#: task_manager/users/views.py:57 task_manager/users/views.py:70
-msgid "Update"
-msgstr "Изменить"
-
-#: task_manager/users/views.py:67
+#: task_manager/users/views.py:69
 msgid "The user has been updated successfully"
 msgstr "Пользователь успешно изменён"
 
-#: task_manager/users/views.py:90
+#: task_manager/users/views.py:92
 msgid "The user has been deleted"
 msgstr "Пользователь успешно удалён"
 
