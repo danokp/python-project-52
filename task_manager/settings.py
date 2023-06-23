@@ -36,7 +36,8 @@ DEBUG = os.getenv('DEBUG', False)
 ALLOWED_HOSTS = [
     '*',
     'webserver',
-    'task-manager-pd.up.railway.app',
+    'http://127.0.0.1:8000/',
+    # 'task-manager-pd.up.railway.app',
 ]
 
 
@@ -65,9 +66,9 @@ MESSAGE_TAGS = {
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
-    'django.middleware.locale.LocaleMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
+    'django.middleware.locale.LocaleMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',

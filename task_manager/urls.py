@@ -18,7 +18,11 @@ from django.conf.urls.i18n import i18n_patterns
 from django.contrib import admin
 from django.urls import path, include
 from task_manager import views
+from django.conf.urls import handler404
+from django.http import Http404
 
+def raise_404(request):
+    raise Http404
 
 urlpatterns = i18n_patterns(
     path('', views.HomePageView.as_view(), name='homepage'),
@@ -27,4 +31,7 @@ urlpatterns = i18n_patterns(
     path('login/', views.UserLoginView.as_view(), name='login'),
     path('logout/', views.UserLogoutView.as_view(), name='logout'),
     path('admin/', admin.site.urls),
+    path('test-404/', raise_404),
 )
+
+handler404 = 'task_manager.views.error_404'

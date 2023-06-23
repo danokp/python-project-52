@@ -10,5 +10,5 @@ class UserLoginRequiredMixin(LoginRequiredMixin):
         if not self.request.user.is_authenticated:
             messages.error(self.request, _('You are not logged in! Log in, please.'))
             return redirect('login')
-        messages.error(self.request, _("You do not have permission to modify another user."))
-        return redirect('show_users')
+        # messages.error(self.request, _("You do not have permission to modify another user."))
+        # return redirect('show_users')

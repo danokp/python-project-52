@@ -59,3 +59,7 @@ class UserLogoutView(View):
         logout(request)
         messages.info(request, _('You are logged out'))
         return redirect('homepage')
+
+
+def error_404(request, exception):
+    return render(request, '404.html')
