@@ -20,7 +20,10 @@ test:
 	@$(MANAGE) test
 
 user_fixture:
-	@$(MANAGE) dumpdata users.User --indent 4 >> users.json
+	@$(MANAGE) dumpdata users.User --pks 1 --indent 4 > ./task_manager/tests/fixtures/users.json
+
+status_fixture:
+	@$(MANAGE) dumpdata statuses.Status --pks 1 --indent 4 > ./task_manager/tests/fixtures/statuses.json
 
 i18n_makemessages_ru:
 	poetry run django-admin makemessages -l ru
