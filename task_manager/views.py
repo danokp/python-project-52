@@ -5,7 +5,6 @@ from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.forms import AuthenticationForm
 from django.utils.translation import gettext as _
-from django.http import HttpResponseNotFound
 
 
 class HomePageView(TemplateView):

@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from django.views import View
 from django.utils.translation import gettext as _
 from django.contrib import messages
+from django.shortcuts import get_object_or_404
 
 from .mixin import UserLoginRequiredMixin
 from .models import Status
@@ -52,18 +53,20 @@ class StatusUpdateView(UserLoginRequiredMixin, View):
 
     def get(self, request, *args, **kwargs):
         status_id = kwargs.get('pk')
-        status = Status.objects.get(id=status_id)
-        form = StatusCreationForm(instance=status)
-        button_text = _('Update')
-        return render(
-            request,
-            'statuses/update_status.html',
-            context={'form': form, 'button_text': button_text},
-        )
+        status = get_object_or_404(Status, id=status_id)
+        if status:
+            form = StatusCreationForm(instance=status)
+            button_text = _('Update')
+            return render(
+                request,
+                'statuses/update_status.html',
+                context={'form': form, 'button_text': button_text},
+            )
+
 
     def post(self, request, *args, **kwargs):
         status_id = kwargs.get('pk')
-        status = Status.objects.get(id=status_id)
+        status = get_object_or_404(Status, id=status_id)
         form = StatusCreationForm(request.POST, instance=status)
 
         if form.is_valid():
@@ -83,7 +86,7 @@ class StatusDeleteView(UserLoginRequiredMixin, View):
 
     def get(self, request, *args, **kwargs):
         status_id = kwargs.get('pk')
-        status = Status.objects.get(id=status_id)
+        status = get_object_or_404(Status, id=status_id)
         button_text = _('Delete')
         return render(
             request,
@@ -93,7 +96,7 @@ class StatusDeleteView(UserLoginRequiredMixin, View):
 
     def post(self, request, *args, **kwargs):
         status_id = kwargs.get('pk')
-        status = Status.objects.get(id=status_id)
+        status = get_object_or_404(Status, id=status_id)
         if status:
             messages.success(request, _('Status deleted'))
             status.delete()
