@@ -5,6 +5,7 @@ from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.forms import AuthenticationForm
 from django.utils.translation import gettext as _
+from django.http import HttpResponseNotFound
 
 
 class HomePageView(TemplateView):
@@ -59,7 +60,3 @@ class UserLogoutView(View):
         logout(request)
         messages.info(request, _('You are logged out'))
         return redirect('homepage')
-
-
-def error_404(request, exception):
-    return render(request, '404.html')
