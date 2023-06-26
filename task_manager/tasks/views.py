@@ -104,4 +104,17 @@ class TaskUpdateView(View):
 class TaskDeleteView(View):
     '''Delete task.'''
 
-    pass
+    def get(self, request, *args, **kwargs):
+        task_id = kwargs.get('pk')
+        task = get_object_or_404(Task, id=task_id)
+        return render(
+            request,
+            'tasks/delete_task.html',
+            context={'task': task}
+        )
+
+    def post(self, request, *args, **kwargs):
+        task_id = kwargs.get('pk')
+        task = get_object_or_404(Task, id=task_id)
+        task.delete()
+        return redirect('show_tasks')

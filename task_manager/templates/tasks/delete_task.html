@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% load i18n %}
+
+{% block content %}
+<h1 class="my-4">{% trans 'Delete task' %}</h1>
+<p>{% trans 'Are you sure you want to delete' %} {{ task.name }}?</p>
+<form method="post">
+  {% csrf_token %}
+  <input class="btn btn-danger" type="submit" value="{% trans 'Delete' %}">
+</form>
+{% endblock %}
