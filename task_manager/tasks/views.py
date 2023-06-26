@@ -13,9 +13,7 @@ class TaskListView(View):
     '''Show list of tasks'''
 
     def get(self, request, *args, **kwargs):
-        statuses = Status.objects.all()
         tasks = Task.objects.all()
-        users = User.objects.all()
         filtered_tasks = TaskFilter(
             request.GET,
             queryset=tasks,
@@ -25,7 +23,10 @@ class TaskListView(View):
         return render(
             request,
             'tasks/show_tasks.html',
-            context={'tasks': tasks, 'statuses': statuses, 'users': users, 'filtered_tasks': filtered_tasks, 'button_text': button_text},
+            context={
+                'filtered_tasks': filtered_tasks,
+                'button_text': button_text,
+            },
         )
 
 
