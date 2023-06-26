@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from django.views import View
 from django.utils.translation import gettext as _
+from django.shortcuts import get_object_or_404
 
 from .models import Task
 from .filters import TaskFilter
@@ -34,7 +35,7 @@ class TaskView(View):
 
     def get(self, request, *args, **kwargs):
         task_id = kwargs.get('pk')
-        task = Task.objects.get(id=task_id)
+        task = get_object_or_404(Task, id=task_id)
         return render(
             request,
             'tasks/task.html',
@@ -73,7 +74,31 @@ class TaskCreateView(View):
 class TaskUpdateView(View):
     '''Update task.'''
 
-    pass
+    def get(self, request, *args, **kwargs):
+        task_id = kwargs.get('pk')
+        task = get_object_or_404(Task, id=task_id)
+        form = TaskCreationForm(instance=task)
+        button_text = _('Update')
+        return render(
+            request,
+            'tasks/update_task.html',
+            context={'form': form, 'button_text': button_text},
+        )
+
+    def post(self, request, *args, **kwargs):
+        task_id = kwargs.get('pk')
+        task = get_object_or_404(Task, id=task_id)
+        form = TaskCreationForm(request.POST,instance=task)
+        if form.is_valid():
+            form.save()
+            return redirect('show_tasks')
+
+        button_text = _('Update')
+        return render(
+            request,
+            'tasks/update_task.html',
+            context={'form': form, 'button_text': button_text},
+        )
 
 
 class TaskDeleteView(View):
