@@ -22,7 +22,7 @@ class Task(models.Model):
         on_delete=models.PROTECT,
         related_name='executed_tasks',
     )
-    tag = models.CharField(max_length=50, null=True, blank=True)
+    label = models.CharField(max_length=50, null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
