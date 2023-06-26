@@ -54,14 +54,13 @@ class StatusUpdateView(UserLoginRequiredMixin, View):
     def get(self, request, *args, **kwargs):
         status_id = kwargs.get('pk')
         status = get_object_or_404(Status, id=status_id)
-        if status:
-            form = StatusCreationForm(instance=status)
-            button_text = _('Update')
-            return render(
-                request,
-                'statuses/update_status.html',
-                context={'form': form, 'button_text': button_text},
-            )
+        form = StatusCreationForm(instance=status)
+        button_text = _('Update')
+        return render(
+            request,
+            'statuses/update_status.html',
+            context={'form': form, 'button_text': button_text},
+        )
 
 
     def post(self, request, *args, **kwargs):
