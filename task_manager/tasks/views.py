@@ -5,11 +5,11 @@ from django.shortcuts import get_object_or_404
 
 from .models import Task
 from .filters import TaskFilter
-
+from task_manager.statuses.mixin import UserLoginRequiredMixin
 from .forms import TaskCreationForm
 
 
-class TaskListView(View):
+class TaskListView(UserLoginRequiredMixin, View):
     '''Show list of tasks'''
 
     def get(self, request, *args, **kwargs):
@@ -30,7 +30,7 @@ class TaskListView(View):
         )
 
 
-class TaskView(View):
+class TaskView(UserLoginRequiredMixin, View):
     '''Show task.'''
 
     def get(self, request, *args, **kwargs):
@@ -43,7 +43,7 @@ class TaskView(View):
         )
 
 
-class TaskCreateView(View):
+class TaskCreateView(UserLoginRequiredMixin, View):
     '''Create new task.'''
 
     def get(self, request, *args, **kwargs):
@@ -71,7 +71,7 @@ class TaskCreateView(View):
         )
 
 
-class TaskUpdateView(View):
+class TaskUpdateView(UserLoginRequiredMixin, View):
     '''Update task.'''
 
     def get(self, request, *args, **kwargs):
@@ -101,7 +101,7 @@ class TaskUpdateView(View):
         )
 
 
-class TaskDeleteView(View):
+class TaskDeleteView(UserLoginRequiredMixin, View):
     '''Delete task.'''
 
     def get(self, request, *args, **kwargs):
