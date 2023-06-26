@@ -2,10 +2,13 @@ from django.shortcuts import render, redirect
 from django.views import View
 from django.contrib import messages
 from django.utils.translation import gettext as _
+from django.shortcuts import get_object_or_404
+from django.db.models import Q
 
 from .forms import UserRegistrationForm
 from .models import User
 from .mixin import UserAccessMixin
+from task_manager.tasks.models import Task
 
 
 class UsersView(View):
@@ -52,7 +55,7 @@ class UserUpdateView(UserAccessMixin, View):
 
     def get(self, request, *args, **kwargs):
         user_id = kwargs.get('pk')
-        user = User.objects.get(id=user_id)
+        user = get_object_or_404(User, id=user_id)
         form = UserRegistrationForm(instance=user)
         button_text = _('Update')
         return render(
@@ -63,7 +66,7 @@ class UserUpdateView(UserAccessMixin, View):
 
     def post(self, request, *args, **kwargs):
         user_id = kwargs.get('pk')
-        user = User.objects.get(id=user_id)
+        user = get_object_or_404(User, id=user_id)
         form = UserRegistrationForm(request.POST, instance=user)
         if form.is_valid():
             messages.success(request, _('The user has been updated successfully'))
@@ -82,13 +85,19 @@ class UserDeleteView(UserAccessMixin, View):
 
     def get(self, request, *args, **kwargs):
         user_id = kwargs.get('pk')
-        user = User.objects.get(id=user_id)
+        user = get_object_or_404(User, id=user_id)
         return render(request, 'users/delete_user.html', {'user': user})
 
     def post(self, request, *args, **kwargs):
         user_id = kwargs.get('pk')
-        user = User.objects.get(id=user_id)
-        if user:
-            messages.success(request, _('The user has been deleted'))
-            user.delete()
+        user = get_object_or_404(User, id=user_id)
+        related_tasks = Task.objects.filter(Q(creator=user) | Q(executor=user))
+        if related_tasks.exists():
+            messages.error(
+                request,
+                _('Cannot delete user. There are related tasks.'),
+            )
+            return redirect('show_users')
+        messages.success(request, _('The user has been deleted'))
+        user.delete()
         return redirect('show_users')

@@ -7,6 +7,7 @@ from django.shortcuts import get_object_or_404
 from .mixin import UserLoginRequiredMixin
 from .models import Status
 from .forms import StatusCreationForm
+from task_manager.tasks.models import Task
 
 
 class StatusView(UserLoginRequiredMixin, View):
@@ -38,7 +39,7 @@ class StatusCreateView(UserLoginRequiredMixin, View):
         button_text = _('Create')
 
         if form.is_valid():
-            messages.success(request, _('Status created successfully'))
+            messages.success(request, _('Status has been created successfully'))
             form.save()
             return redirect('show_statuses')
         return render(
@@ -69,7 +70,7 @@ class StatusUpdateView(UserLoginRequiredMixin, View):
         form = StatusCreationForm(request.POST, instance=status)
 
         if form.is_valid():
-            messages.success(request, _('Status updated successfully'))
+            messages.success(request, _('Status has been updated successfully'))
             form.save()
             return redirect('show_statuses')
         button_text = _('Update')
@@ -95,6 +96,13 @@ class StatusDeleteView(UserLoginRequiredMixin, View):
     def post(self, request, *args, **kwargs):
         status_id = kwargs.get('pk')
         status = get_object_or_404(Status, id=status_id)
-        messages.success(request, _('Status deleted'))
+        related_tasks = Task.objects.filter(status=status)
+        if related_tasks.exists():
+            messages.error(
+                request,
+                _('Cannot delete status. There are related tasks.'),
+            )
+            return redirect('show_statuses')
+        messages.success(request, _('Status has been deleted'))
         status.delete()
         return redirect('show_statuses')
