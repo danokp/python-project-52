@@ -1,12 +1,11 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.views import View
 from django.utils.translation import gettext as _
 
 from .models import Task
 from .filters import TaskFilter
 
-from task_manager.statuses.models import Status
-from task_manager.users.models import User
+from .forms import TaskCreationForm
 
 
 class TaskListView(View):
@@ -46,7 +45,29 @@ class TaskView(View):
 class TaskCreateView(View):
     '''Create new task.'''
 
-    pass
+    def get(self, request, *args, **kwargs):
+        form = TaskCreationForm()
+        button_text = _('Create')
+        return render(
+            request,
+            'tasks/create_task.html',
+            context={'form': form, 'button_text': button_text},
+        )
+
+    def post(self, request, *args, **kwargs):
+        form = TaskCreationForm(request.POST)
+        button_text = _('Create')
+
+        if form.is_valid():
+            task = form.save(commit=False)
+            task.creator = request.user
+            task.save()
+            return redirect('show_tasks')
+        return render(
+            request,
+            'tasks/create_task.html',
+            context={'form': form, 'button_text': button_text},
+        )
 
 
 class TaskUpdateView(View):
