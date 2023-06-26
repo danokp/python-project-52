@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+
+{% load i18n %}
+
+{% block content %}
+<h1 class="my-4">{% trans 'Task information' %}</h1>
+
+<div class="card">
+  <div class="card-header bg-secondary text-white">
+    <h2>{{ task.name }}</h2>
+  </div>
+  <div class="card-body bg-light">
+    <p>{{ task.description }}</p>
+    <hr>
+    <div class="container">
+      <div class="row p-1">
+        <div class="col">{% trans 'Creator' %}</div>
+        <div class="col">{{ task.creator.first_name }} {{ task.creator.last_name }}</div>
+      </div>
+      <div class="row p-1">
+        <div class="col">{% trans 'Executor' %}</div>
+        <div class="col">{{ task.executor.first_name }} {{ task.executor.last_name }}</div>
+      </div>
+      <div class="row p-1">
+        <div class="col">{% trans 'Status' %}</div>
+        <div class="col">{{ task.status.name }} </div>
+      </div>
+      <div class="row p-1">
+        <div class="col">{% trans 'Creation date' %}</div>
+        <div class="col">{{ task.created_at|date:"d.Y.m H:i" }}</div>
+      </div>
+      <div class="row p-1">
+        <div class="col">
+          <h6>{% trans 'Labels' %}:</h6>
+          <ul>
+
+              <li></li>
+
+              <li></li>
+
+          </ul>
+        </div>
+      </div>
+      <div class="row p-1">
+        <div class="col">
+          <a href="{% url 'update_task' pk=task.id %}">{% trans 'Edit' %}</a>
+          <br>
+          <a href="{% url 'delete_task' pk=task.id %}">{% trans 'Delete' %}</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

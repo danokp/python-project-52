@@ -33,7 +33,14 @@ class TaskListView(View):
 class TaskView(View):
     '''Show task.'''
 
-    pass
+    def get(self, request, *args, **kwargs):
+        task_id = kwargs.get('pk')
+        task = Task.objects.get(id=task_id)
+        return render(
+            request,
+            'tasks/task.html',
+            context={'task': task}
+        )
 
 
 class TaskCreateView(View):
