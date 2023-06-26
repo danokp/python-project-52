@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from django.views import View
 from django.utils.translation import gettext as _
+from django.contrib import messages
 from django.shortcuts import get_object_or_404
 
 from .models import Task
@@ -60,6 +61,7 @@ class TaskCreateView(UserLoginRequiredMixin, View):
         button_text = _('Create')
 
         if form.is_valid():
+            messages.success(request, _('Task created successfully'))
             task = form.save(commit=False)
             task.creator = request.user
             task.save()
@@ -90,6 +92,7 @@ class TaskUpdateView(UserLoginRequiredMixin, View):
         task = get_object_or_404(Task, id=task_id)
         form = TaskCreationForm(request.POST,instance=task)
         if form.is_valid():
+            messages.success(request, _('Task updated successfully'))
             form.save()
             return redirect('show_tasks')
 
@@ -116,5 +119,6 @@ class TaskDeleteView(UserLoginRequiredMixin, View):
     def post(self, request, *args, **kwargs):
         task_id = kwargs.get('pk')
         task = get_object_or_404(Task, id=task_id)
+        messages.success(request, _('Task deleted'))
         task.delete()
         return redirect('show_tasks')
