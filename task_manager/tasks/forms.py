@@ -25,6 +25,7 @@ class TaskCreationForm(forms.ModelForm):
     )
     label = forms.ModelMultipleChoiceField(
         queryset=Label.objects.all(),
+        required=False,
     )
 
     class Meta:

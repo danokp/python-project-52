@@ -65,6 +65,7 @@ class TaskCreateView(UserLoginRequiredMixin, View):
             task = form.save(commit=False)
             task.creator = request.user
             task.save()
+            form.save_m2m()
             return redirect('show_tasks')
         return render(
             request,
