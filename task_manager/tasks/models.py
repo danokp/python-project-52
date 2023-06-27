@@ -29,7 +29,6 @@ class Task(models.Model):
     )
     label = models.ManyToManyField(
         Label,
-        null=True,
         blank=True,
     )
     created_at = models.DateTimeField(auto_now_add=True)
