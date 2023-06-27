@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from django.views import View
 from django.utils.translation import gettext as _
+from django.shortcuts import get_object_or_404
 
 from task_manager.mixins import UserLoginRequiredMixin
 from .models import Label
@@ -48,7 +49,33 @@ class LabelCreateView(UserLoginRequiredMixin, View):
 
 class LabelUpdateView(UserLoginRequiredMixin, View):
     '''Update label.'''
-    pass
+
+    def get(self, request, *args, **kwargs):
+        label_id = kwargs.get('pk')
+        label = get_object_or_404(Label, id=label_id)
+        form = LabelCreationForm(instance=label)
+        button_text = _('Update')
+        return render(
+            request,
+            'labels/update_label.html',
+            context={'form': form, 'button_text': button_text},
+        )
+
+    def post(self, request, *args, **kwargs):
+        label_id = kwargs.get('pk')
+        label = get_object_or_404(Label, id=label_id)
+        form = LabelCreationForm(request.POST, instance=label)
+
+        if form.is_valid():
+            form.save()
+            return redirect('show_labels')
+
+        button_text = _('Update')
+        return render(
+            request,
+            'labels/update_label.html',
+            context={'form': form, 'button_text': button_text},
+        )
 
 
 class LabelDeleteView(UserLoginRequiredMixin, View):
