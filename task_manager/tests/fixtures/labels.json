@@ -1,0 +1,26 @@
+[
+{
+    "model": "labels.label",
+    "pk": 1,
+    "fields": {
+        "name": "Lord of the rings",
+        "created_at": "2023-06-27T11:16:27.996Z"
+    }
+},
+{
+    "model": "labels.label",
+    "pk": 2,
+    "fields": {
+        "name": "Mount Doom",
+        "created_at": "2023-06-27T11:16:50.151Z"
+    }
+},
+{
+    "model": "labels.label",
+    "pk": 3,
+    "fields": {
+        "name": "Best friend",
+        "created_at": "2023-06-27T11:20:29.852Z"
+    }
+}
+]

@@ -47,31 +47,34 @@ class TestStatusViewLoggedIn(TestCase):
 
     def test_status_create_post_valid_form(self):
         '''Test POST request to create new status'''
-        status_name = 'in progress'
-        response = self.client.post(
-            self.create_status_url,
-            data={'name': status_name},
-        )
-        self.assertEquals(response.status_code, 302)
-        status = Status.objects.get(id=3)
-        self.assertEquals(status.name, status_name)
-
-
-    def test_status_create_post_invalid_form(self):
-        '''Try to create Status with a name of an existing status.'''
+        status_count_before_changes = Status.objects.count()
         status_name = 'tested'
         response = self.client.post(
             self.create_status_url,
             data={'name': status_name},
         )
+        self.assertEquals(response.status_code, 302)
+        status = Status.objects.get(id=status_count_before_changes + 1)
+        self.assertEquals(Status.objects.count(), status_count_before_changes+1)
+        self.assertEquals(status.name, status_name)
+
+
+    def test_status_create_post_invalid_form(self):
+        '''Try to create Status with a name of an existing status.'''
+        status_count_before_changes = Status.objects.count()
+        status_name = 'in progress'
+        response = self.client.post(
+            self.create_status_url,
+            data={'name': status_name},
+        )
         self.assertEquals(response.status_code, 200)
-        self.assertEquals(Status.objects.count(), 2)
+        self.assertEquals(Status.objects.count(), status_count_before_changes)
         self.assertTemplateUsed(response, 'statuses/create_status.html')
 
 
     def test_status_update_post_valid_form(self):
         '''Test POST request to update status'''
-        status_name = 'in progress'
+        status_name = 'tested'
         response = self.client.post(
             self.update_status_url,
             data={'name': status_name},
@@ -96,9 +99,10 @@ class TestStatusViewLoggedIn(TestCase):
 
     def test_status_delete_post(self):
         '''Test POST request to delete status'''
+        status_count_before_changes = Status.objects.count()
         response = self.client.post(self.delete_status_url)
         self.assertEquals(response.status_code, 302)
-        self.assertEquals(Status.objects.count(), 1)
+        self.assertEquals(Status.objects.count(), status_count_before_changes-1)
 
 
 class TestStatusViewLoggedOut(TestStatusViewLoggedIn):
@@ -131,7 +135,7 @@ class TestStatusModels(TestCase):
     fixtures = ['statuses.json']
 
     def test_model_fields(self):
-        self.assertEquals(Status.objects.get(id=1).name, 'tested')
+        self.assertEquals(Status.objects.get(id=1).name, 'in progress')
         self.assertEquals(Status.objects.get(id=2).name, 'new')
 
 
