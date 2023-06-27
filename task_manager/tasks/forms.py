@@ -4,6 +4,7 @@ from django.utils.translation import gettext as _
 from .models import Task
 from task_manager.statuses.models import Status
 from task_manager.users.models import User
+from task_manager.labels.models import Label
 
 class TaskCreationForm(forms.ModelForm):
     name = forms.CharField(label=_('Name'))
@@ -22,7 +23,9 @@ class TaskCreationForm(forms.ModelForm):
         queryset=User.objects.all(),
         required=False,
     )
-    # label =forms.ModelMultipleChoiceField()
+    label = forms.ModelMultipleChoiceField(
+        queryset=Label.objects.all(),
+    )
 
     class Meta:
         model = Task
