@@ -4,7 +4,7 @@ from django.utils.translation import gettext as _
 from django.contrib import messages
 from django.shortcuts import get_object_or_404
 
-from .mixin import UserLoginRequiredMixin
+from task_manager.mixins import UserLoginRequiredMixin
 from .models import Status
 from .forms import StatusCreationForm
 from task_manager.tasks.models import Task

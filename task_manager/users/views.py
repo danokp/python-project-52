@@ -7,7 +7,7 @@ from django.db.models import Q
 
 from .forms import UserRegistrationForm
 from .models import User
-from .mixin import UserAccessMixin
+from .mixins import UserAccessMixin
 from task_manager.tasks.models import Task
 
 

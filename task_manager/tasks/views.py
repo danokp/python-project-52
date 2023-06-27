@@ -6,7 +6,7 @@ from django.shortcuts import get_object_or_404
 
 from .models import Task
 from .filters import TaskFilter
-from task_manager.statuses.mixin import UserLoginRequiredMixin
+from task_manager.mixins import UserLoginRequiredMixin
 from .forms import TaskCreationForm
 
 

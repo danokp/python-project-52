@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.views import View
 
-from task_manager.mixin import UserLoginRequiredMixin
+from task_manager.mixins import UserLoginRequiredMixin
 
 
 
