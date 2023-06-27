@@ -40,7 +40,7 @@
         <td>{{ task.status.name }}</td>
         <td>{{ task.creator.first_name }} {{ task.creator.last_name }}</td>
         <td>{{ task.executor.first_name }} {{ task.executor.last_name }}</td>
-        <td>{{ task.created_at|date:"d.Y.m H:i" }}</td>
+        <td>{{ task.created_at|date:"d.m.Y H:i" }}</td>
         <td>
           <a href="{% url 'update_task' pk=task.id %}">{% trans 'Edit' %}</a>
           <br>
