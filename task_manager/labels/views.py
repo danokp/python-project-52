@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from django.views import View
 from django.utils.translation import gettext as _
+from django.contrib import messages
 from django.shortcuts import get_object_or_404
 
 from task_manager.mixins import UserLoginRequiredMixin
@@ -37,6 +38,7 @@ class LabelCreateView(UserLoginRequiredMixin, View):
         form = LabelCreationForm(request.POST)
 
         if form.is_valid():
+            messages.success(request, _('Label has been created successfully'))
             form.save()
             return redirect('show_labels')
 
@@ -68,6 +70,7 @@ class LabelUpdateView(UserLoginRequiredMixin, View):
         form = LabelCreationForm(request.POST, instance=label)
 
         if form.is_valid():
+            messages.success(request, _('Label has been updated successfully'))
             form.save()
             return redirect('show_labels')
 
@@ -95,7 +98,12 @@ class LabelDeleteView(UserLoginRequiredMixin, View):
         label = get_object_or_404(Label, id=label_id)
         related_tasks = Task.objects.filter(label=label)
         if related_tasks.exists():
+            messages.error(
+                request,
+                _('Cannot delete label. There are related tasks.'),
+            )
             return redirect('show_labels')
 
+        messages.success(request, _('Label has been deleted'))
         label.delete()
         return redirect('show_labels')

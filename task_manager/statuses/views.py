@@ -36,12 +36,12 @@ class StatusCreateView(UserLoginRequiredMixin, View):
 
     def post(self, request, *args, **kwargs):
         form = StatusCreationForm(request.POST)
-        button_text = _('Create')
 
         if form.is_valid():
             messages.success(request, _('Status has been created successfully'))
             form.save()
             return redirect('show_statuses')
+        button_text = _('Create')
         return render(
             request,
             'statuses/create_status.html',
