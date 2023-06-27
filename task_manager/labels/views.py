@@ -6,6 +6,7 @@ from django.shortcuts import get_object_or_404
 from task_manager.mixins import UserLoginRequiredMixin
 from .models import Label
 from .forms import LabelCreationForm
+from task_manager.tasks.models import Task
 
 
 class LabelView(UserLoginRequiredMixin, View):
@@ -80,4 +81,21 @@ class LabelUpdateView(UserLoginRequiredMixin, View):
 
 class LabelDeleteView(UserLoginRequiredMixin, View):
     '''Delete label.'''
-    pass
+    def get(self, request, *args, **kwargs):
+        label_id = kwargs.get('pk')
+        label = get_object_or_404(Label, id=label_id)
+        return render(
+            request,
+            'labels/delete_label.html',
+            context={'label': label},
+        )
+
+    def post(self, request, *args, **kwargs):
+        label_id = kwargs.get('pk')
+        label = get_object_or_404(Label, id=label_id)
+        related_tasks = Task.objects.filter(label=label)
+        if related_tasks.exists():
+            return redirect('show_labels')
+
+        label.delete()
+        return redirect('show_labels')
