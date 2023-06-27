@@ -1,3 +1,25 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
+from django.views import View
 
-# Create your views here.
+from task_manager.mixin import UserLoginRequiredMixin
+
+
+
+class LabelView(UserLoginRequiredMixin, View):
+    '''Show list of statuses.'''
+    pass
+
+
+class LabelCreateView(UserLoginRequiredMixin, View):
+    '''Create new status.'''
+    pass
+
+
+class LabelUpdateView(UserLoginRequiredMixin, View):
+    '''Update status.'''
+    pass
+
+
+class LabelDeleteView(UserLoginRequiredMixin, View):
+    '''Delete status.'''
+    pass
