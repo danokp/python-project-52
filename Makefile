@@ -25,6 +25,12 @@ user_fixture:
 status_fixture:
 	@$(MANAGE) dumpdata statuses.Status --pks 1 --indent 4 > ./task_manager/tests/fixtures/statuses.json
 
+label_fixture:
+	@$(MANAGE) dumpdata labels.Label --indent 4 > ./task_manager/tests/fixtures/labels.json
+
+task_fixture:
+	@$(MANAGE) dumpdata tasks.Task --indent 4 > ./task_manager/tests/fixtures/tasks.json
+
 i18n_makemessages_ru:
 	poetry run django-admin makemessages -l ru
 
