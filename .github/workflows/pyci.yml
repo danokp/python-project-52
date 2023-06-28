@@ -25,4 +25,6 @@ jobs:
       - name: Run linter
         run: |
           make check
+      - name: Run functional tests
+        run: |
           make test
