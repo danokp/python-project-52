@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from django.views import View
 from django.contrib import messages
 from django.utils.translation import gettext as _
+from django.utils.translation import pgettext
 from django.shortcuts import get_object_or_404
 from django.db.models import Q
 
@@ -31,7 +32,7 @@ class UserFormCreateView(View):
             return redirect('homepage')
 
         form = UserRegistrationForm()
-        button_text = _('Sign Up')
+        button_text = pgettext('Button name', 'Sign Up')
         return render(
             request,
             'users/create_user.html',
@@ -40,7 +41,7 @@ class UserFormCreateView(View):
 
     def post(self, request, *args, **kwargs):
         form = UserRegistrationForm(request.POST)
-        button_text = _('Sign Up')
+        button_text = pgettext('Button name', 'Sign Up')
         if form.is_valid():
             messages.success(
                 request,

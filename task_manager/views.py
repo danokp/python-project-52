@@ -5,6 +5,7 @@ from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.forms import AuthenticationForm
 from django.utils.translation import gettext as _
+from django.utils.translation import pgettext
 
 
 class HomePageView(TemplateView):
@@ -21,7 +22,7 @@ class UserLoginView(View):
             return redirect('homepage')
 
         form = AuthenticationForm()
-        button_text = _('Login')
+        button_text = pgettext('Button name', 'Login')
         return render(
             request,
             'login.html',
@@ -46,7 +47,7 @@ class UserLoginView(View):
             Both fields may be case-sensitive.''')
         )
         form = AuthenticationForm(request.POST)
-        button_text = _('Login')
+        button_text = pgettext('Button name', 'Login')
         return render(
             request,
             'login.html',
