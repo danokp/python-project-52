@@ -170,3 +170,5 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # Tests
 
 FIXTURE_DIRS = ['task_manager/tests/fixtures/']
+
+TEST_DATABASE_PREFIX = 'test_'
