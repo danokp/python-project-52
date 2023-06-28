@@ -91,7 +91,7 @@ class TaskUpdateView(UserLoginRequiredMixin, View):
     def post(self, request, *args, **kwargs):
         task_id = kwargs.get('pk')
         task = get_object_or_404(Task, id=task_id)
-        form = TaskCreationForm(request.POST,instance=task)
+        form = TaskCreationForm(request.POST, instance=task)
         if form.is_valid():
             messages.success(request, _('Task updated successfully'))
             form.save()

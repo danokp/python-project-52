@@ -6,6 +6,7 @@ from task_manager.statuses.models import Status
 from task_manager.users.models import User
 from task_manager.labels.models import Label
 
+
 class TaskCreationForm(forms.ModelForm):
     name = forms.CharField(label=_('Name'))
     description = forms.CharField(

@@ -9,6 +9,7 @@ from task_manager.tasks.forms import TaskCreationForm
 class TestTaskForms(TestCase):
     '''Test Task Form'''
     fixtures = ['users.json', 'statuses.json', 'labels.json']
+
     def test_task_form_valid_data(self):
         form = TaskCreationForm(
             data={

@@ -11,7 +11,13 @@ class UserAccessMixin(UserPassesTestMixin):
 
     def handle_no_permission(self):
         if not self.request.user.is_authenticated:
-            messages.error(self.request, _('You are not logged in! Log in, please.'))
+            messages.error(
+                self.request,
+                _('You are not logged in! Log in, please.'),
+            )
             return redirect('login')
-        messages.error(self.request, _("You do not have permission to modify another user."))
+        messages.error(
+            self.request,
+            _("You do not have permission to modify another user."),
+        )
         return redirect('show_users')

@@ -40,10 +40,12 @@ class UserLoginView(View):
             messages.success(request, _('You are logged in'))
             login(request, user)
             return redirect('homepage')
-        messages.error(request, _('Enter the correct username and password, please. Both fields may be case-sensitive.'))
+        messages.error(
+            request,
+            _('''Enter the correct username and password, please.
+            Both fields may be case-sensitive.''')
+        )
         form = AuthenticationForm(request.POST)
-        # for f in form:
-        #     print(f.name)
         button_text = _('Login')
         return render(
             request,

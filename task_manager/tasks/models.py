@@ -4,7 +4,7 @@ from task_manager.statuses.models import Status
 from task_manager.users.models import User
 from task_manager.labels.models import Label
 
-# Create your models here.
+
 class Task(models.Model):
     '''Task model'''
     name = models.CharField(max_length=250, unique=True)

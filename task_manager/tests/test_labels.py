@@ -35,7 +35,6 @@ class TestLabelViewLoggedIn(TestCase):
             (self.delete_label_url_invalid_id, '404.html', 404),
         ]
 
-
     def test_labels_get(self):
         '''Test GET requests of CRUD'''
         for url, template, status_code in self.TESTDATA:
@@ -43,7 +42,6 @@ class TestLabelViewLoggedIn(TestCase):
                 response = self.client.get(url)
                 self.assertEquals(response.status_code, status_code)
                 self.assertTemplateUsed(response, template)
-
 
     def test_label_create_post_valid_form(self):
         '''Test POST request to create new label'''
@@ -55,9 +53,11 @@ class TestLabelViewLoggedIn(TestCase):
         )
         self.assertEquals(response.status_code, 302)
         label = Label.objects.get(id=label_count_before_changes + 1)
-        self.assertEquals(Label.objects.count(), label_count_before_changes+1)
+        self.assertEquals(
+            Label.objects.count(),
+            label_count_before_changes + 1,
+        )
         self.assertEquals(label.name, label_name)
-
 
     def test_label_create_post_invalid_form(self):
         '''Try to create Label with a name of an existing label.'''
@@ -71,7 +71,6 @@ class TestLabelViewLoggedIn(TestCase):
         self.assertEquals(Label.objects.count(), label_count_before_changes)
         self.assertTemplateUsed(response, 'labels/create_label.html')
 
-
     def test_label_update_post_valid_form(self):
         '''Test POST request to update label'''
         label_name = 'tested'
@@ -82,7 +81,6 @@ class TestLabelViewLoggedIn(TestCase):
         self.assertEquals(response.status_code, 302)
         label = Label.objects.get(id=1)
         self.assertEquals(label.name, label_name)
-
 
     def test_label_update_post_invalid_form(self):
         '''Try to update Label with a name of an existing label.'''
@@ -96,13 +94,15 @@ class TestLabelViewLoggedIn(TestCase):
         self.assertNotEqual(label.name, label_name)
         self.assertTemplateUsed(response, 'labels/update_label.html')
 
-
     def test_label_delete_post(self):
         '''Test POST request to delete label'''
         label_count_before_changes = Label.objects.count()
         response = self.client.post(self.delete_label_url)
         self.assertEquals(response.status_code, 302)
-        self.assertEquals(Label.objects.count(), label_count_before_changes-1)
+        self.assertEquals(
+            Label.objects.count(),
+            label_count_before_changes - 1,
+        )
 
 
 class TestLabelViewLoggedOut(TestLabelViewLoggedIn):

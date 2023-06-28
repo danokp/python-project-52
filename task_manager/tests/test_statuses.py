@@ -35,7 +35,6 @@ class TestStatusViewLoggedIn(TestCase):
             (self.delete_status_url_invalid_id, '404.html', 404),
         ]
 
-
     def test_status_get(self):
         '''Test GET requests of CRUD'''
         for url, template, status_code in self.TESTDATA:
@@ -43,7 +42,6 @@ class TestStatusViewLoggedIn(TestCase):
                 response = self.client.get(url)
                 self.assertEquals(response.status_code, status_code)
                 self.assertTemplateUsed(response, template)
-
 
     def test_status_create_post_valid_form(self):
         '''Test POST request to create new status'''
@@ -55,9 +53,11 @@ class TestStatusViewLoggedIn(TestCase):
         )
         self.assertEquals(response.status_code, 302)
         status = Status.objects.get(id=status_count_before_changes + 1)
-        self.assertEquals(Status.objects.count(), status_count_before_changes+1)
+        self.assertEquals(
+            Status.objects.count(),
+            status_count_before_changes + 1,
+        )
         self.assertEquals(status.name, status_name)
-
 
     def test_status_create_post_invalid_form(self):
         '''Try to create Status with a name of an existing status.'''
@@ -71,7 +71,6 @@ class TestStatusViewLoggedIn(TestCase):
         self.assertEquals(Status.objects.count(), status_count_before_changes)
         self.assertTemplateUsed(response, 'statuses/create_status.html')
 
-
     def test_status_update_post_valid_form(self):
         '''Test POST request to update status'''
         status_name = 'tested'
@@ -82,7 +81,6 @@ class TestStatusViewLoggedIn(TestCase):
         self.assertEquals(response.status_code, 302)
         status = Status.objects.get(id=1)
         self.assertEquals(status.name, status_name)
-
 
     def test_status_update_post_invalid_form(self):
         '''Try to update Status with a name of an existing status.'''
@@ -96,13 +94,15 @@ class TestStatusViewLoggedIn(TestCase):
         self.assertNotEqual(status.name, status_name)
         self.assertTemplateUsed(response, 'statuses/update_status.html')
 
-
     def test_status_delete_post(self):
         '''Test POST request to delete status'''
         status_count_before_changes = Status.objects.count()
         response = self.client.post(self.delete_status_url)
         self.assertEquals(response.status_code, 302)
-        self.assertEquals(Status.objects.count(), status_count_before_changes-1)
+        self.assertEquals(
+            Status.objects.count(),
+            status_count_before_changes - 1,
+        )
 
 
 class TestStatusViewLoggedOut(TestStatusViewLoggedIn):

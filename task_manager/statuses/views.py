@@ -38,7 +38,10 @@ class StatusCreateView(UserLoginRequiredMixin, View):
         form = StatusCreationForm(request.POST)
 
         if form.is_valid():
-            messages.success(request, _('Status has been created successfully'))
+            messages.success(
+                request,
+                _('Status has been created successfully'),
+            )
             form.save()
             return redirect('show_statuses')
         button_text = _('Create')
@@ -63,14 +66,16 @@ class StatusUpdateView(UserLoginRequiredMixin, View):
             context={'form': form, 'button_text': button_text},
         )
 
-
     def post(self, request, *args, **kwargs):
         status_id = kwargs.get('pk')
         status = get_object_or_404(Status, id=status_id)
         form = StatusCreationForm(request.POST, instance=status)
 
         if form.is_valid():
-            messages.success(request, _('Status has been updated successfully'))
+            messages.success(
+                request,
+                _('Status has been updated successfully'),
+            )
             form.save()
             return redirect('show_statuses')
         button_text = _('Update')

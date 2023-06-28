@@ -10,4 +10,3 @@ class StatusCreationForm(forms.ModelForm):
     class Meta():
         model = Status
         fields = ['name']
-

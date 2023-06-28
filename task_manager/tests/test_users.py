@@ -1,5 +1,5 @@
-from django.test import SimpleTestCase, TestCase, Client
-from django.urls import reverse, resolve
+from django.test import TestCase, Client
+from django.urls import reverse
 from django.utils.translation import activate
 
 from task_manager.users.models import User
@@ -20,7 +20,6 @@ class UserViewTests(TestCase):
         self.assertEquals(response.status_code, 200)
         self.assertTemplateUsed(response, 'users/show_users.html')
 
-
     def test_user_create_post_valid_form(self):
         user_count_before_changes = User.objects.count()
         response = self.client.post(self.create_user_url, data={
@@ -34,7 +33,6 @@ class UserViewTests(TestCase):
         self.assertEquals(response.status_code, 302)
         self.assertEquals(User.objects.count(), user_count_before_changes + 1)
 
-
     def test_user_create_post_invalid_form(self):
         user_count_before_changes = User.objects.count()
         response = self.client.post(self.create_user_url, data={})
@@ -46,6 +44,7 @@ class UserViewTests(TestCase):
 
 class LoggedInUserViewTests(TestCase):
     fixtures = ['users.json']
+
     def setUp(self):
         activate("en")
         self.client = Client()

@@ -38,7 +38,6 @@ class TestTaskViewLoggedIn(TestCase):
             (self.delete_task_url_invalid_id, '404.html', 404),
         ]
 
-
     def test_tasks_get(self):
         '''Test GET requests of CRUD'''
         for url, template, status_code in self.TESTDATA:
@@ -46,7 +45,6 @@ class TestTaskViewLoggedIn(TestCase):
                 response = self.client.get(url)
                 self.assertEquals(response.status_code, status_code)
                 self.assertTemplateUsed(response, template)
-
 
     def test_task_create_post_valid_form(self):
         '''Test POST request to create new task'''
@@ -68,14 +66,13 @@ class TestTaskViewLoggedIn(TestCase):
         )
         self.assertEquals(response.status_code, 302)
         task = Task.objects.get(id=task_count_before_changes + 1)
-        self.assertEquals(Task.objects.count(), task_count_before_changes+1)
+        self.assertEquals(Task.objects.count(), task_count_before_changes + 1)
         self.assertEquals(task.name, task_name)
         self.assertEquals(task.description, task_description)
         self.assertEquals(task.status.id, task_status)
         self.assertEquals(task.executor.id, task_executor)
         self.assertEquals(task.creator.id, task_executor)
         self.assertEquals(task.label.all()[0].id, task_label[0])
-
 
     def test_task_create_post_invalid_form(self):
         '''Try to create Task with a name of an existing task.'''
@@ -87,7 +84,6 @@ class TestTaskViewLoggedIn(TestCase):
         self.assertEquals(response.status_code, 200)
         self.assertEquals(Task.objects.count(), task_count_before_changes)
         self.assertTemplateUsed(response, 'tasks/create_task.html')
-
 
     def test_task_update_post_valid_form(self):
         '''Test POST request to update task'''
@@ -117,13 +113,12 @@ class TestTaskViewLoggedIn(TestCase):
         self.assertEquals(task.creator.id, task_executor)
         self.assertEquals(task.label.all()[0].id, task_label[0])
 
-
     def test_task_delete_post(self):
         '''Test POST request to delete task'''
         task_count_before_changes = Task.objects.count()
         response = self.client.post(self.delete_task_url)
         self.assertEquals(response.status_code, 302)
-        self.assertEquals(Task.objects.count(), task_count_before_changes-1)
+        self.assertEquals(Task.objects.count(), task_count_before_changes - 1)
 
 
 class TestTaskViewLoggedOut(TestTaskViewLoggedIn):

@@ -22,6 +22,7 @@ class UsersView(View):
             context={'users': users}
         )
 
+
 class UserFormCreateView(View):
     '''Create new user.'''
 
@@ -41,7 +42,10 @@ class UserFormCreateView(View):
         form = UserRegistrationForm(request.POST)
         button_text = _('Sign Up')
         if form.is_valid():
-            messages.success(request, _('The user has been registered successfully'))
+            messages.success(
+                request,
+                _('The user has been registered successfully'),
+            )
             form.save()
             return redirect('login')
         return render(
@@ -49,6 +53,7 @@ class UserFormCreateView(View):
             'users/create_user.html',
             {'form': form, 'button_text': button_text},
         )
+
 
 class UserUpdateView(UserAccessMixin, View):
     '''Update user profile.'''
@@ -69,7 +74,10 @@ class UserUpdateView(UserAccessMixin, View):
         user = get_object_or_404(User, id=user_id)
         form = UserRegistrationForm(request.POST, instance=user)
         if form.is_valid():
-            messages.success(request, _('The user has been updated successfully'))
+            messages.success(
+                request,
+                _('The user has been updated successfully'),
+            )
             form.save()
             return redirect('show_users')
         button_text = _('Update')

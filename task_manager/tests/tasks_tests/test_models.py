@@ -15,10 +15,13 @@ class TestTaskModels(TestCase):
         )
         self.assertEquals(Task.objects.get(
             id=task_id).description,
-            '''Путешествие стало слишком опасным для Братства кольца. Теперь мне предстоит нести Кольцо одному.''',
+            '''Путешествие стало слишком опасным для Братства кольца. Теперь мне предстоит нести Кольцо одному.''',  # noqa: E501
         )
         self.assertEquals(Task.objects.get(id=task_id).status.id, 1)
         self.assertEquals(Task.objects.get(id=task_id).creator.id, 1)
         self.assertEquals(Task.objects.get(id=task_id).executor.id, 1)
-        for label, label_id in zip(Task.objects.get(id=task_id).label.all(), (1, 2)):
+        for label, label_id in zip(
+                Task.objects.get(id=task_id).label.all(),
+                (1, 2),
+        ):
             self.assertEquals(label.id, label_id)

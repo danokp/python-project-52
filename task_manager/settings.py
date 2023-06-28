@@ -61,10 +61,10 @@ INSTALLED_APPS = [
 ]
 
 MESSAGE_TAGS = {
-        messages.INFO: 'alert-info',
-        messages.SUCCESS: 'alert-success',
-        messages.ERROR: 'alert-danger',
- }
+    messages.INFO: 'alert-info',
+    messages.SUCCESS: 'alert-success',
+    messages.ERROR: 'alert-danger',
+}
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
