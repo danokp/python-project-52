@@ -26,5 +26,7 @@ jobs:
         run: |
           make check
       - name: Run functional tests
+        env:
+          DJANGO_SETTINGS_MODULE: task_manager.settings
         run: |
           make test
