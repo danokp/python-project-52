@@ -178,5 +178,5 @@ ROLLBAR = {
     'access_token': os.getenv('ROLLBAR_ACCESS_TOKEN'),
     'environment': 'development' if DEBUG else 'production',
     'branch': 'master',
-    'root': '/absolute/path/to/code/root',
+    'root': BASE_DIR,
 }
