@@ -39,3 +39,8 @@ i18n_compilemessages:
 
 lint:
 	poetry run flake8 task_manager
+
+selfcheck:
+	poetry check
+
+check: selfcheck lint
