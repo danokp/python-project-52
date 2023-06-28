@@ -24,7 +24,7 @@ class TaskCreationForm(forms.ModelForm):
         queryset=User.objects.all(),
         required=False,
     )
-    label = forms.ModelMultipleChoiceField(
+    labels = forms.ModelMultipleChoiceField(
         queryset=Label.objects.all(),
         required=False,
     )
@@ -36,5 +36,5 @@ class TaskCreationForm(forms.ModelForm):
             'description',
             'status',
             'executor',
-            'label',
+            'labels',
         ]
