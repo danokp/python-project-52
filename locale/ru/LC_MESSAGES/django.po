@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-06-28 22:05+0400\n"
+"POT-Creation-Date: 2023-06-29 14:52+0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -57,11 +57,11 @@ msgstr "Метка успешно удалена"
 msgid "You are not logged in! Log in, please."
 msgstr "Вы не авторизованы! Пожалуйста, выполните вход."
 
-#: task_manager/settings.py:152
+#: task_manager/settings.py:155
 msgid "Russian"
 msgstr "Русский"
 
-#: task_manager/settings.py:153
+#: task_manager/settings.py:156
 msgid "English"
 msgstr "Английский"
 
