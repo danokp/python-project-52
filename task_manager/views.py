@@ -1,11 +1,9 @@
-from django.shortcuts import render, redirect
 from django.views.generic.base import TemplateView
-from django.views import View
 from django.contrib import messages
-from django.contrib.auth import authenticate, login, logout
-from django.contrib.auth.forms import AuthenticationForm
 from django.utils.translation import gettext as _
 from django.utils.translation import pgettext
+from django.contrib.auth.views import LoginView, LogoutView
+from django.urls import reverse_lazy
 
 
 class HomePageView(TemplateView):
@@ -14,51 +12,26 @@ class HomePageView(TemplateView):
     template_name = 'index.html'
 
 
-class UserLoginView(View):
+class UserLoginView(LoginView):
     '''Authorise the user.'''
 
-    def get(self, request, *args, **kwargs):
-        if request.user.is_authenticated:
-            return redirect('homepage')
+    template_name = 'login.html'
+    extra_context = {'button_text': pgettext('Button name', 'Login')}
+    next_page = reverse_lazy('homepage')
 
-        form = AuthenticationForm()
-        button_text = pgettext('Button name', 'Login')
-        return render(
-            request,
-            'login.html',
-            {'form': form, 'button_text': button_text},
-        )
+    def form_invalid(self, form):
+        return self.render_to_response(self.get_context_data(form=form))
 
-    def post(self, request, *args, **kwargs):
-        username = request.POST.get('username')
-        password = request.POST.get('password')
-        user = authenticate(
-            request,
-            username=username,
-            password=password,
-        )
-        if user is not None:
-            messages.success(request, _('You are logged in'))
-            login(request, user)
-            return redirect('homepage')
-        messages.error(
-            request,
-            _('Enter the correct username and password, please. ') +  # noqa W504
-            _('Both fields may be case-sensitive.')
-        )
-        form = AuthenticationForm(request.POST)
-        button_text = pgettext('Button name', 'Login')
-        return render(
-            request,
-            'login.html',
-            {'form': form, 'button_text': button_text},
-        )
+    def form_valid(self, form):
+        messages.success(self.request, _('You are logged in'))
+        return super().form_valid(form)
 
 
-class UserLogoutView(View):
+class UserLogoutView(LogoutView):
     '''Logout user.'''
 
-    def post(self, request, *args, **kwargs):
-        logout(request)
+    next_page = reverse_lazy('homepage')
+
+    def dispatch(self, request, *args, **kwargs):
         messages.info(request, _('You are logged out'))
-        return redirect('homepage')
+        return super().dispatch(request, *args, **kwargs)
