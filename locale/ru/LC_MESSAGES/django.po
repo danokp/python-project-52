@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-06-28 22:05+0400\n"
+"POT-Creation-Date: 2023-06-29 15:07+0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -32,7 +32,7 @@ msgstr "Создать"
 
 #: task_manager/labels/views.py:41
 msgid "Label has been created successfully"
-msgstr "Метка успешно изменена"
+msgstr "Метка успешно создана"
 
 #: task_manager/labels/views.py:60 task_manager/labels/views.py:77
 #: task_manager/statuses/views.py:62 task_manager/statuses/views.py:81
@@ -74,11 +74,11 @@ msgstr "Имя"
 
 #: task_manager/statuses/views.py:43
 msgid "Status has been created successfully"
-msgstr "Статус успешно изменён"
+msgstr "Статус успешно создан"
 
 #: task_manager/statuses/views.py:77
 msgid "Status has been updated successfully"
-msgstr "Статус успешно изменён"
+msgstr "Статус успешно изменен"
 
 #: task_manager/statuses/views.py:108
 msgid "Cannot delete status. There are related tasks."
@@ -86,7 +86,7 @@ msgstr "Невозможно удалить статус, потому что о
 
 #: task_manager/statuses/views.py:111
 msgid "Status has been deleted"
-msgstr "Статус успешно удалён"
+msgstr "Статус успешно удален"
 
 #: task_manager/tasks/filters.py:18
 msgid "Created by me"
@@ -114,7 +114,7 @@ msgstr "Показать"
 
 #: task_manager/tasks/views.py:64
 msgid "Task created successfully"
-msgstr "Задача успешно изменёна"
+msgstr "Задача успешно создана"
 
 #: task_manager/tasks/views.py:96
 msgid "Task updated successfully"
@@ -317,7 +317,7 @@ msgstr "Пользователь успешно зарегистрирован"
 
 #: task_manager/users/views.py:80
 msgid "The user has been updated successfully"
-msgstr "Пользователь успешно изменён"
+msgstr "Пользователь успешно изменен"
 
 #: task_manager/users/views.py:107
 msgid "Cannot delete user. There are related tasks."
@@ -325,7 +325,7 @@ msgstr "Невозможно удалить статус, потому что о
 
 #: task_manager/users/views.py:110
 msgid "The user has been deleted"
-msgstr "Пользователь успешно удалён"
+msgstr "Пользователь успешно удален"
 
 #: task_manager/views.py:25 task_manager/views.py:50
 msgctxt "Button name"
@@ -337,16 +337,12 @@ msgid "You are logged in"
 msgstr "Вы залогинены"
 
 #: task_manager/views.py:46
-#, fuzzy
-#| msgid ""
-#| "Enter the correct username and password, please. Both fields may be case-"
-#| "sensitive."
-msgid ""
-"Enter the correct username and password, please.\n"
-"            Both fields may be case-sensitive."
-msgstr ""
-"Пожалуйста, введите правильные имя пользователя и пароль. Оба поля могут "
-"быть чувствительны к регистру."
+msgid "Enter the correct username and password, please. "
+msgstr "Пожалуйста, введите правильные имя пользователя и пароль. "
+
+#: task_manager/views.py:47
+msgid "Both fields may be case-sensitive."
+msgstr "Оба поля могут быть чувствительны к регистру."
 
 #: task_manager/views.py:63
 msgid "You are logged out"
