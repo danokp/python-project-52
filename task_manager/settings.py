@@ -104,10 +104,10 @@ WSGI_APPLICATION = 'task_manager.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-        # 'ENGINE': os.getenv('DBENGINE'),
-        # 'NAME': os.getenv('PGDATABASE'),
+        # 'ENGINE': 'django.db.backends.sqlite3',
+        # 'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': os.getenv('ENGINE'),
+        'NAME': os.getenv('DBNAME'),
         'USER': os.getenv('PGUSER'),
         'PASSWORD': os.getenv('PGPASSWORD'),
         'HOST': os.getenv('PGHOST'),
@@ -174,9 +174,9 @@ FIXTURE_DIRS = ['task_manager/tests/fixtures/']
 
 TEST_DATABASE_PREFIX = 'test_'
 
-# ROLLBAR = {
-#     'access_token': os.getenv('ROLLBAR_ACCESS_TOKEN'),
-#     'environment': 'development' if DEBUG else 'production',
-#     'branch': 'master',
-#     'root': BASE_DIR,
-# }
+ROLLBAR = {
+    'access_token': os.getenv('ROLLBAR_ACCESS_TOKEN'),
+    'environment': 'development' if DEBUG else 'production',
+    'branch': 'master',
+    'root': BASE_DIR,
+}
