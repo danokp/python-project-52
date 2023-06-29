@@ -12,10 +12,6 @@ jobs:
         # we want to test our package on several versions of Python
         python-version: ['3.10', '3.11']
     steps:
-      - shell: bash
-        env:
-          SECRET_KEY: ${{ secrets.SECRET_KEY }}
-          DJANGO_SETTINGS_MODULE: ${{ secrets.DJANGO_SETTINGS_MODULE }}
       - uses: actions/checkout@v3
       - name: Set up Python ${{ matrix.python-version }}
         uses: actions/setup-python@v4
@@ -31,6 +27,7 @@ jobs:
           make check
       - name: Run functional tests
         env:
-          DJANGO_SETTINGS_MODULE: task_manager.settings
+          SECRET_KEY: ${{ secrets.SECRET_KEY }}
+          DJANGO_SETTINGS_MODULE: ${{ secrets.DJANGO_SETTINGS_MODULE }}
         run: |
           make test
