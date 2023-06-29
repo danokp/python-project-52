@@ -21,7 +21,7 @@ class TestTaskModels(TestCase):
         self.assertEquals(Task.objects.get(id=task_id).creator.id, 1)
         self.assertEquals(Task.objects.get(id=task_id).executor.id, 1)
         for label, label_id in zip(
-                Task.objects.get(id=task_id).label.all(),
+                Task.objects.get(id=task_id).labels.all(),
                 (1, 2),
         ):
             self.assertEquals(label.id, label_id)

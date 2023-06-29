@@ -61,7 +61,7 @@ class TestTaskViewLoggedIn(TestCase):
                 'description': task_description,
                 'status': task_status,
                 'executor': task_executor,
-                'label': task_label,
+                'labels': task_label,
             },
         )
         self.assertEquals(response.status_code, 302)
@@ -72,7 +72,7 @@ class TestTaskViewLoggedIn(TestCase):
         self.assertEquals(task.status.id, task_status)
         self.assertEquals(task.executor.id, task_executor)
         self.assertEquals(task.creator.id, task_executor)
-        self.assertEquals(task.label.all()[0].id, task_label[0])
+        self.assertEquals(task.labels.all()[0].id, task_label[0])
 
     def test_task_create_post_invalid_form(self):
         '''Try to create Task with a name of an existing task.'''
@@ -100,7 +100,7 @@ class TestTaskViewLoggedIn(TestCase):
                 'description': task_description,
                 'status': task_status,
                 'executor': task_executor,
-                'label': task_label,
+                'labels': task_label,
             },
         )
         self.assertEquals(response.status_code, 302)
@@ -111,7 +111,7 @@ class TestTaskViewLoggedIn(TestCase):
         self.assertEquals(task.status.id, task_status)
         self.assertEquals(task.executor.id, task_executor)
         self.assertEquals(task.creator.id, task_executor)
-        self.assertEquals(task.label.all()[0].id, task_label[0])
+        self.assertEquals(task.labels.all()[0].id, task_label[0])
 
     def test_task_delete_post(self):
         '''Test POST request to delete task'''

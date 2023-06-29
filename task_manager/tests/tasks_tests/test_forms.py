@@ -18,7 +18,7 @@ class TestTaskForms(TestCase):
                 'status': Status.objects.get(id=1),
                 'creator': User.objects.get(id=1),
                 'executor': User.objects.get(id=1),
-                'label': [Label.objects.get(id=1), Label.objects.get(id=2)],
+                'labels': [Label.objects.get(id=1), Label.objects.get(id=2)],
             }
         )
         self.assertTrue(form.is_valid())

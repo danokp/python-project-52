@@ -43,8 +43,8 @@ class UserLoginView(View):
             return redirect('homepage')
         messages.error(
             request,
-            _('''Enter the correct username and password, please.
-            Both fields may be case-sensitive.''')
+            _('Enter the correct username and password, please. ') +  # noqa W504
+            _('Both fields may be case-sensitive.')
         )
         form = AuthenticationForm(request.POST)
         button_text = pgettext('Button name', 'Login')

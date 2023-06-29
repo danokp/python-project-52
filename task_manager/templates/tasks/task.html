@@ -27,13 +27,13 @@
       </div>
       <div class="row p-1">
         <div class="col">{% trans 'Creation date' %}</div>
-        <div class="col">{{ task.created_at|date:"d.Y.m H:i" }}</div>
+        <div class="col">{{ task.created_at|date:"d.m.Y H:i" }}</div>
       </div>
       <div class="row p-1">
         <div class="col">
           <h6>{% trans 'Labels' %}:</h6>
           <ul>
-            {% for label in task.label.all %}
+            {% for label in task.labels.all %}
               <li>{{ label.name }}</li>
              {% endfor %}
           </ul>

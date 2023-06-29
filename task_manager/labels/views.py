@@ -96,7 +96,7 @@ class LabelDeleteView(UserLoginRequiredMixin, View):
     def post(self, request, *args, **kwargs):
         label_id = kwargs.get('pk')
         label = get_object_or_404(Label, id=label_id)
-        related_tasks = Task.objects.filter(label=label)
+        related_tasks = Task.objects.filter(labels=label)
         if related_tasks.exists():
             messages.error(
                 request,
