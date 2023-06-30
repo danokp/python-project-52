@@ -4,5 +4,5 @@
 <form method="post">
     {% csrf_token %}
     {% bootstrap_form form %}
-    <input class="btn btn-primary" type="submit" value={{ button_text }}>
+    <button type="submit" class="btn btn-primary">{{ button_text }}</button>
 </form>
