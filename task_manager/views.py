@@ -17,7 +17,6 @@ class UserLoginView(LoginView):
 
     template_name = 'login.html'
     extra_context = {'button_text': pgettext('Button name', 'Login')}
-    next_page = reverse_lazy('homepage')
 
     def form_invalid(self, form):
         return self.render_to_response(self.get_context_data(form=form))
@@ -29,8 +28,6 @@ class UserLoginView(LoginView):
 
 class UserLogoutView(LogoutView):
     '''Logout user.'''
-
-    next_page = reverse_lazy('homepage')
 
     def dispatch(self, request, *args, **kwargs):
         messages.info(request, _('You are logged out'))
