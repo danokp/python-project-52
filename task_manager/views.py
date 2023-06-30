@@ -17,6 +17,7 @@ class UserLoginView(LoginView):
 
     template_name = 'login.html'
     extra_context = {'button_text': pgettext('Button name', 'Login')}
+    success_url = reverse_lazy('homepage')
 
     def form_invalid(self, form):
         return self.render_to_response(self.get_context_data(form=form))
