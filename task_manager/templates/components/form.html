@@ -4,5 +4,5 @@
 <form method="post">
     {% csrf_token %}
     {% bootstrap_form form %}
-    <button type="submit" class="btn btn-primary">{{ button_text }}</button>
+    <button type="submit" class="btn btn-primary">{% trans "Войти" %}</button>
 </form>
