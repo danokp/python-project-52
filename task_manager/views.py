@@ -16,7 +16,7 @@ class UserLoginView(LoginView):
     '''Authorise the user.'''
 
     template_name = 'login.html'
-    extra_context = {'button_text': 'Войти'}
+    extra_context = {'button_text': pgettext('Button name', 'Login')}
     next_page = reverse_lazy('homepage')
 
     def form_invalid(self, form):
