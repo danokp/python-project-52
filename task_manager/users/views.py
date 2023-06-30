@@ -5,6 +5,8 @@ from django.utils.translation import gettext as _
 from django.utils.translation import pgettext
 from django.shortcuts import get_object_or_404
 from django.db.models import Q
+from django.views.generic.edit import CreateView
+from django.urls import reverse_lazy
 
 from .forms import UserRegistrationForm
 from .models import User
@@ -24,36 +26,21 @@ class UsersView(View):
         )
 
 
-class UserFormCreateView(View):
+class UserFormCreateView(CreateView):
     '''Create new user.'''
 
-    def get(self, request, *args, **kwargs):
-        if request.user.is_authenticated:
-            return redirect('homepage')
+    model = User
+    form_class = UserRegistrationForm
+    success_url = reverse_lazy('login')
+    template_name = 'users/create_user.html'
+    extra_context = {'button_text': pgettext('Button name', 'Sign Up')}
 
-        form = UserRegistrationForm()
-        button_text = pgettext('Button name', 'Sign Up')
-        return render(
-            request,
-            'users/create_user.html',
-            {'form': form, 'button_text': button_text},
+    def form_valid(self, form):
+        messages.success(
+            self.request,
+            _('The user has been registered successfully'),
         )
-
-    def post(self, request, *args, **kwargs):
-        form = UserRegistrationForm(request.POST)
-        button_text = pgettext('Button name', 'Sign Up')
-        if form.is_valid():
-            messages.success(
-                request,
-                _('The user has been registered successfully'),
-            )
-            form.save()
-            return redirect('login')
-        return render(
-            request,
-            'users/create_user.html',
-            {'form': form, 'button_text': button_text},
-        )
+        return super().form_valid(form)
 
 
 class UserUpdateView(UserAccessMixin, View):
