@@ -170,9 +170,9 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # TEST_DATABASE_PREFIX = 'test_'
 
-ROLLBAR = {
-    'access_token': os.getenv('ROLLBAR_ACCESS_TOKEN'),
-    'environment': 'development' if DEBUG else 'production',
-    'branch': 'master',
-    'root': BASE_DIR,
-}
+# ROLLBAR = {
+#     'access_token': os.getenv('ROLLBAR_ACCESS_TOKEN'),
+#     'environment': 'development' if DEBUG else 'production',
+#     'branch': 'master',
+#     'root': BASE_DIR,
+# }
