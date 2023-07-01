@@ -12,6 +12,7 @@ from .forms import UserRegistrationForm
 from .models import User
 from .mixins import UserAccessMixin
 from task_manager.tasks.models import Task
+from task_manager.logging_config import logger
 
 
 class UsersView(View):
@@ -36,11 +37,16 @@ class UserFormCreateView(CreateView):
     extra_context = {'button_text': pgettext('Button name', 'Sign Up')}
 
     def form_valid(self, form):
+        logger.debug('The user has been registered successfully')
         messages.success(
             self.request,
             _('The user has been registered successfully'),
         )
         return super().form_valid(form)
+
+    def form_invalid(self, form):
+        logger.error('The user has not been registered')
+        return super().form_invalid(form)
 
 
 class UserUpdateView(UserAccessMixin, View):
