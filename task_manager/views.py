@@ -16,7 +16,6 @@ class HomePageView(TemplateView):
 
 class UserLoginView(LoginView):
     '''Authorise the user.'''
-
     template_name = 'login.html'
     extra_context = {'button_text': pgettext('Button name', 'Login')}
     success_url = reverse_lazy('homepage')
