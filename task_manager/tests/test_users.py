@@ -6,6 +6,7 @@ from task_manager.users.models import User
 
 
 class UserViewTests(TestCase):
+    fixtures = ['users.json']
 
     def setUp(self):
         activate("en")
@@ -13,6 +14,24 @@ class UserViewTests(TestCase):
 
         self.users_url = reverse('show_users')
         self.create_user_url = reverse('create_user')
+        self.login_url = reverse('login')
+
+    def test_user_login_get(self):
+        response = self.client.get(self.login_url)
+
+        self.assertEquals(response.status_code, 200)
+        self.assertTemplateUsed(response, 'login.html')
+
+    def test_user_login_post(self):
+        username = 'ring.bearer'
+        password = 'frodo_124578'
+
+        response = self.client.post(self.login_url, data={
+            'username': username,
+            'password': password,
+        })
+
+        self.assertEquals(response.status_code, 302)
 
     def test_user_show_users_get(self):
         response = self.client.get(self.users_url)
