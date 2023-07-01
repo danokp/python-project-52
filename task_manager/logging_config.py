@@ -1,6 +1,30 @@
 import logging
 
 
+class CustomFormatter(logging.Formatter):
+
+    grey = "\x1b[38;20m"
+    blue = "\x1b[34m"
+    yellow = "\x1b[33;20m"
+    red = "\x1b[31;20m"
+    bold_red = "\x1b[31;1m"
+    reset = "\x1b[0m"
+    format = "%(levelname)s - %(message)s (%(filename)s:%(lineno)d)"
+
+    FORMATS = {
+        logging.DEBUG: blue + format + reset,
+        logging.INFO: grey + format + reset,
+        logging.WARNING: yellow + format + reset,
+        logging.ERROR: red + format + reset,
+        logging.CRITICAL: bold_red + format + reset
+    }
+
+    def format(self, record):
+        log_fmt = self.FORMATS.get(record.levelno)
+        formatter = logging.Formatter(log_fmt)
+        return formatter.format(record)
+
+
 # Create a custom logger
 logger = logging.getLogger(__name__)
 
@@ -8,9 +32,8 @@ logger = logging.getLogger(__name__)
 c_handler = logging.StreamHandler()
 c_handler.setLevel(logging.WARNING)
 
-# Create formatter and add it to handler
-c_format = logging.Formatter('%(name)s - %(message)s')
-c_handler.setFormatter(c_format)
+# Add formatter to handler
+c_handler.setFormatter(CustomFormatter())
 
 # Add handlers to the logger
 logger.addHandler(c_handler)
