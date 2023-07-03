@@ -46,4 +46,5 @@ selfcheck:
 check: selfcheck lint
 
 test-coverage:
-	poetry run coverage run --source='.' manage.py test task_manager
+	poetry run coverage run --source='task_manager' manage.py test task_manager
+	poetry run coverage xml -o coverage.xml
