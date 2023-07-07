@@ -10,7 +10,7 @@ from task_manager.users.models import User
 
 class TaskFilter(django_filters.FilterSet):
     '''Filter for tasks filtering.'''
-    label = django_filters.ModelChoiceFilter(
+    labels = django_filters.ModelChoiceFilter(
         queryset=Label.objects.all(),
         label=_('Label'),
     )
@@ -45,6 +45,6 @@ class TaskFilter(django_filters.FilterSet):
         fields = [
             'status',
             'executor',
-            'label',
+            'labels',
             'self_tasks',
         ]
