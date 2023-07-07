@@ -58,6 +58,7 @@ class UserUpdateView(UserAccessMixin, UserBaseView, UpdateView):
         )
         return super().form_valid(form)
 
+
 class UserDeleteView(UserAccessMixin, UserBaseView, DeleteView):
     '''Delete user.'''
 
