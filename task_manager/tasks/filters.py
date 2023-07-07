@@ -3,7 +3,9 @@ from django import forms
 from django.utils.translation import gettext as _
 
 from .models import Task
+from task_manager.statuses.models import Status
 from task_manager.labels.models import Label
+from task_manager.users.models import User
 
 
 class TaskFilter(django_filters.FilterSet):
@@ -18,6 +20,16 @@ class TaskFilter(django_filters.FilterSet):
         label=_('Created by me'),
         widget=forms.CheckboxInput(),
         required=False
+    )
+
+    status = django_filters.ModelChoiceFilter(
+        queryset=Status.objects.all(),
+        label=_('Status'),
+    )
+
+    executor = django_filters.ModelChoiceFilter(
+        queryset=User.objects.all(),
+        label=_('Executor'),
     )
 
     def filter_created_by_logged_in_user(self, queryset, name, value):

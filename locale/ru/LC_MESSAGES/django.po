@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-07-07 09:32+0400\n"
+"POT-Creation-Date: 2023-07-07 10:05+0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -85,29 +85,29 @@ msgstr "Невозможно удалить статус, потому что о
 msgid "Status has been deleted"
 msgstr "Статус успешно удален"
 
-#: task_manager/tasks/filters.py:13
+#: task_manager/tasks/filters.py:15
 msgid "Label"
 msgstr "Метка"
 
-#: task_manager/tasks/filters.py:18
+#: task_manager/tasks/filters.py:20
 msgid "Created by me"
 msgstr "Только свои задачи"
 
-#: task_manager/tasks/forms.py:13
-msgid "Description"
-msgstr "Описание"
-
-#: task_manager/tasks/forms.py:18
+#: task_manager/tasks/filters.py:27 task_manager/tasks/forms.py:18
 #: task_manager/templates/tasks/show_tasks.html:26
 #: task_manager/templates/tasks/task.html:25
 msgid "Status"
 msgstr "Статус"
 
-#: task_manager/tasks/forms.py:23
+#: task_manager/tasks/filters.py:32 task_manager/tasks/forms.py:23
 #: task_manager/templates/tasks/show_tasks.html:28
 #: task_manager/templates/tasks/task.html:21
 msgid "Executor"
 msgstr "Исполнитель"
+
+#: task_manager/tasks/forms.py:13
+msgid "Description"
+msgstr "Описание"
 
 #: task_manager/tasks/forms.py:28
 #: task_manager/templates/components/navbar.html:19
