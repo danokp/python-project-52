@@ -1,8 +1,11 @@
-from django.shortcuts import render, redirect
-from django.views import View
+from django.shortcuts import redirect
 from django.utils.translation import gettext as _
 from django.contrib import messages
-from django.shortcuts import get_object_or_404
+from django.views.generic.list import ListView
+from django.views.generic.edit import CreateView
+from django.urls import reverse_lazy
+from django.views.generic.edit import UpdateView
+from django.views.generic.edit import DeleteView
 
 from task_manager.mixins import UserLoginRequiredMixin
 from .models import Label
@@ -10,100 +13,61 @@ from .forms import LabelCreationForm
 from task_manager.tasks.models import Task
 
 
-class LabelView(UserLoginRequiredMixin, View):
+class LabelBaseView:
+    model = Label
+
+
+class LabelView(UserLoginRequiredMixin, LabelBaseView, ListView):
     '''Show list of labels.'''
 
-    def get(self, request, *args, **kwargs):
-        labels = Label.objects.all()
-        return render(
-            request,
-            'labels/show_labels.html',
-            context={'labels': labels}
-        )
 
-
-class LabelCreateView(UserLoginRequiredMixin, View):
+class LabelCreateView(UserLoginRequiredMixin, LabelBaseView, CreateView):
     '''Create new label.'''
 
-    def get(self, request, *args, **kwargs):
-        form = LabelCreationForm()
-        button_text = _('Create')
-        return render(
-            request,
-            'labels/create_label.html',
-            context={'form': form, 'button_text': button_text},
+    form_class = LabelCreationForm
+    success_url = reverse_lazy('show_labels')
+    template_name = 'labels/create_label.html'
+    extra_context = {'button_text': _('Create')}
+
+    def form_valid(self, form):
+        messages.success(
+            self.request,
+            _('Label has been created successfully'),
         )
-
-    def post(self, request, *args, **kwargs):
-        form = LabelCreationForm(request.POST)
-
-        if form.is_valid():
-            messages.success(request, _('Label has been created successfully'))
-            form.save()
-            return redirect('show_labels')
-
-        button_text = _('Create')
-        return render(
-            request,
-            'labels/create_label.html',
-            context={'form': form, 'button_text': button_text},
-        )
+        return super().form_valid(form)
 
 
-class LabelUpdateView(UserLoginRequiredMixin, View):
+class LabelUpdateView(UserLoginRequiredMixin, LabelBaseView, UpdateView):
     '''Update label.'''
 
-    def get(self, request, *args, **kwargs):
-        label_id = kwargs.get('pk')
-        label = get_object_or_404(Label, id=label_id)
-        form = LabelCreationForm(instance=label)
-        button_text = _('Update')
-        return render(
-            request,
-            'labels/update_label.html',
-            context={'form': form, 'button_text': button_text},
+    form_class = LabelCreationForm
+    success_url = reverse_lazy('show_labels')
+    template_name = 'labels/update_label.html'
+    extra_context = {'button_text': _('Update')}
+
+    def form_valid(self, form):
+        messages.success(
+            self.request,
+            _('Label has been updated successfully'),
         )
-
-    def post(self, request, *args, **kwargs):
-        label_id = kwargs.get('pk')
-        label = get_object_or_404(Label, id=label_id)
-        form = LabelCreationForm(request.POST, instance=label)
-
-        if form.is_valid():
-            messages.success(request, _('Label has been updated successfully'))
-            form.save()
-            return redirect('show_labels')
-
-        button_text = _('Update')
-        return render(
-            request,
-            'labels/update_label.html',
-            context={'form': form, 'button_text': button_text},
-        )
+        return super().form_valid(form)
 
 
-class LabelDeleteView(UserLoginRequiredMixin, View):
+class LabelDeleteView(UserLoginRequiredMixin, LabelBaseView, DeleteView):
     '''Delete label.'''
-    def get(self, request, *args, **kwargs):
-        label_id = kwargs.get('pk')
-        label = get_object_or_404(Label, id=label_id)
-        return render(
-            request,
-            'labels/delete_label.html',
-            context={'label': label},
-        )
+
+    success_url = reverse_lazy('show_labels')
+    template_name = 'labels/delete_label.html'
+    extra_context = {'button_text': _('Delete')}
 
     def post(self, request, *args, **kwargs):
-        label_id = kwargs.get('pk')
-        label = get_object_or_404(Label, id=label_id)
-        related_tasks = Task.objects.filter(labels=label)
+        self.object = self.get_object()
+        related_tasks = Task.objects.filter(labels=self.object)
         if related_tasks.exists():
             messages.error(
                 request,
                 _('Cannot delete label. There are related tasks.'),
             )
             return redirect('show_labels')
-
-        messages.success(request, _('Label has been deleted'))
-        label.delete()
-        return redirect('show_labels')
+        messages.success(self.request, _('Label has been deleted'))
+        return super().post(request)

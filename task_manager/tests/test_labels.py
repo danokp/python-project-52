@@ -28,7 +28,7 @@ class TestLabelViewLoggedIn(TestCase):
         )
 
         self.TESTDATA = [
-            (self.labels_url, 'labels/show_labels.html', 200),
+            (self.labels_url, 'labels/label_list.html', 200),
             (self.create_label_url, 'labels/create_label.html', 200),
             (self.update_label_url, 'labels/update_label.html', 200),
             (self.delete_label_url, 'labels/delete_label.html', 200),
