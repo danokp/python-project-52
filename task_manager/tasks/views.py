@@ -2,10 +2,8 @@ from django.utils.translation import gettext as _
 from django.contrib import messages
 from django_filters.views import FilterView
 from django.views.generic.detail import DetailView
-from django.views.generic.edit import CreateView
+from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.urls import reverse_lazy
-from django.views.generic.edit import UpdateView
-from django.views.generic.edit import DeleteView
 
 from .models import Task
 from .filters import TaskFilter
