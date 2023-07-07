@@ -28,7 +28,7 @@ class TestStatusViewLoggedIn(TestCase):
         )
 
         self.TESTDATA = [
-            (self.statuses_url, 'statuses/show_statuses.html', 200),
+            (self.statuses_url, 'statuses/status_list.html', 200),
             (self.create_status_url, 'statuses/create_status.html', 200),
             (self.update_status_url, 'statuses/update_status.html', 200),
             (self.delete_status_url, 'statuses/delete_status.html', 200),
