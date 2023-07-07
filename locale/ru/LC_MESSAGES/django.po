@@ -193,7 +193,7 @@ msgstr "Узнать больше"
 #: task_manager/templates/labels/create_label.html:6
 #: task_manager/templates/labels/show_labels.html:7
 msgid "Create label"
-msgstr "Создание метки"
+msgstr "Создать метку"
 
 #: task_manager/templates/labels/delete_label.html:6
 msgid "Delete label"
@@ -243,7 +243,7 @@ msgstr "Изменение метки"
 #: task_manager/templates/statuses/create_status.html:6
 #: task_manager/templates/statuses/show_statuses.html:7
 msgid "Create status"
-msgstr "Создание статуса"
+msgstr "Создать статус"
 
 #: task_manager/templates/statuses/delete_status.html:6
 msgid "Delete status"
@@ -255,7 +255,7 @@ msgstr "Изменение статуса"
 
 #: task_manager/templates/tasks/create_task.html:6
 msgid "Create task"
-msgstr "Создание задачи"
+msgstr "Создать задачу"
 
 #: task_manager/templates/tasks/delete_task.html:6
 msgid "Delete task"
@@ -263,7 +263,7 @@ msgstr "Удаление задачи"
 
 #: task_manager/templates/tasks/show_tasks.html:8
 msgid "Create new task"
-msgstr "Создание задачи"
+msgstr "Создать задачу"
 
 #: task_manager/templates/tasks/show_tasks.html:27
 #: task_manager/templates/tasks/task.html:17
