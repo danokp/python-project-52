@@ -25,6 +25,7 @@ class TaskCreationForm(forms.ModelForm):
         required=False,
     )
     labels = forms.ModelMultipleChoiceField(
+        label=_('Labels'),
         queryset=Label.objects.all(),
         required=False,
     )
