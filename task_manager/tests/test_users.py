@@ -37,7 +37,7 @@ class UserViewTests(TestCase):
         response = self.client.get(self.users_url)
 
         self.assertEquals(response.status_code, 200)
-        self.assertTemplateUsed(response, 'users/show_users.html')
+        self.assertTemplateUsed(response, 'users/user_list.html')
 
     def test_user_create_post_valid_form(self):
         user_count_before_changes = User.objects.count()

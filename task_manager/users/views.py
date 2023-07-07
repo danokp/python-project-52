@@ -1,12 +1,13 @@
-from django.shortcuts import render, redirect
-from django.views import View
+from django.shortcuts import redirect
 from django.contrib import messages
 from django.utils.translation import gettext as _
 from django.utils.translation import pgettext
-from django.shortcuts import get_object_or_404
 from django.db.models import Q
 from django.views.generic.edit import CreateView
 from django.urls import reverse_lazy
+from django.views.generic.list import ListView
+from django.views.generic.edit import UpdateView
+from django.views.generic.edit import DeleteView
 
 from .forms import UserRegistrationForm
 from .models import User
@@ -15,22 +16,17 @@ from task_manager.tasks.models import Task
 from task_manager.logging_config import logger
 
 
-class UsersView(View):
+class UserBaseView:
+    model = User
+
+
+class UsersView(UserBaseView, ListView):
     '''Show list of users.'''
 
-    def get(self, request, *args, **kwargs):
-        users = User.objects.all()
-        return render(
-            request,
-            'users/show_users.html',
-            context={'users': users}
-        )
 
-
-class UserFormCreateView(CreateView):
+class UserFormCreateView(UserBaseView, CreateView):
     '''Create new user.'''
 
-    model = User
     form_class = UserRegistrationForm
     success_url = reverse_lazy('login')
     template_name = 'users/create_user.html'
@@ -49,57 +45,32 @@ class UserFormCreateView(CreateView):
         return super().form_invalid(form)
 
 
-class UserUpdateView(UserAccessMixin, View):
+class UserUpdateView(UserAccessMixin, UserBaseView, UpdateView):
     '''Update user profile.'''
 
-    def get(self, request, *args, **kwargs):
-        user_id = kwargs.get('pk')
-        user = get_object_or_404(User, id=user_id)
-        form = UserRegistrationForm(instance=user)
-        button_text = _('Update')
-        return render(
-            request,
-            'users/update_user.html',
-            {'form': form, 'button_text': button_text},
-        )
-
-    def post(self, request, *args, **kwargs):
-        user_id = kwargs.get('pk')
-        user = get_object_or_404(User, id=user_id)
-        form = UserRegistrationForm(request.POST, instance=user)
-        if form.is_valid():
-            messages.success(
-                request,
-                _('The user has been updated successfully'),
-            )
-            form.save()
-            return redirect('show_users')
-        button_text = _('Update')
-        return render(
-            request,
-            'users/update_user.html',
-            {'form': form, 'button_text': button_text},
-        )
+    form_class = UserRegistrationForm
+    success_url = reverse_lazy('show_users')
+    template_name = 'users/update_user.html'
+    extra_context = {'button_text': _('Update')}
 
 
-class UserDeleteView(UserAccessMixin, View):
+class UserDeleteView(UserAccessMixin, UserBaseView, DeleteView):
     '''Delete user.'''
 
-    def get(self, request, *args, **kwargs):
-        user_id = kwargs.get('pk')
-        user = get_object_or_404(User, id=user_id)
-        return render(request, 'users/delete_user.html', {'user': user})
+    success_url = reverse_lazy('show_users')
+    template_name = 'users/delete_user.html'
+    extra_context = {'button_text': _('Delete')}
 
     def post(self, request, *args, **kwargs):
-        user_id = kwargs.get('pk')
-        user = get_object_or_404(User, id=user_id)
-        related_tasks = Task.objects.filter(Q(creator=user) | Q(executor=user))
+        self.object = self.get_object()
+        related_tasks = Task.objects.filter(
+            Q(creator=self.object) | Q(executor=self.object)
+        )
         if related_tasks.exists():
             messages.error(
                 request,
                 _('Cannot delete user. There are related tasks.'),
             )
             return redirect('show_users')
-        messages.success(request, _('The user has been deleted'))
-        user.delete()
-        return redirect('show_users')
+        messages.success(self.request, _('The user has been deleted'))
+        return super().post(request)
