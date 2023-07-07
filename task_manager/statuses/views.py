@@ -2,10 +2,8 @@ from django.shortcuts import redirect
 from django.utils.translation import gettext as _
 from django.contrib import messages
 from django.views.generic.list import ListView
-from django.views.generic.edit import CreateView
+from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.urls import reverse_lazy
-from django.views.generic.edit import UpdateView
-from django.views.generic.edit import DeleteView
 
 from task_manager.mixins import UserLoginRequiredMixin
 from .models import Status

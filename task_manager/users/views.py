@@ -3,11 +3,9 @@ from django.contrib import messages
 from django.utils.translation import gettext as _
 from django.utils.translation import pgettext
 from django.db.models import Q
-from django.views.generic.edit import CreateView
+from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.urls import reverse_lazy
 from django.views.generic.list import ListView
-from django.views.generic.edit import UpdateView
-from django.views.generic.edit import DeleteView
 
 from .forms import UserRegistrationForm
 from .models import User
@@ -53,6 +51,12 @@ class UserUpdateView(UserAccessMixin, UserBaseView, UpdateView):
     template_name = 'users/update_user.html'
     extra_context = {'button_text': _('Update')}
 
+    def form_valid(self, form):
+        messages.success(
+            self.request,
+            _('The user has been updated successfully'),
+        )
+        return super().form_valid(form)
 
 class UserDeleteView(UserAccessMixin, UserBaseView, DeleteView):
     '''Delete user.'''
