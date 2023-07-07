@@ -10,7 +10,7 @@
 <div class="card mb-3">
   <div class="card-body bg-light">
     <form class="form-inline center" method="get">
-      {% bootstrap_form filtered_tasks.form label_class="ml-2 mr-3" form_group_class="form-group mr-3" bound_css_class='' %}
+      {% bootstrap_form filter.form label_class="ml-2 mr-3" form_group_class="form-group mr-3" bound_css_class='' %}
       <div class="form-group">
       {% bootstrap_button button_text button_type="submit" button_class="btn btn-primary" %}
       </div>
@@ -31,7 +31,8 @@
     </tr>
   </thead>
   <tbody>
-    {% for task in filtered_tasks.qs %}
+  {{ filtered_tasks }}
+    {% for task in filter.qs %}
       <tr>
         <td>{{ task.id }}</td>
         <td>

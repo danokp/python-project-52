@@ -29,8 +29,8 @@ class TestTaskViewLoggedIn(TestCase):
         )
 
         self.TESTDATA = [
-            (self.tasks_url, 'tasks/show_tasks.html', 200),
-            (self.task_url, 'tasks/task.html', 200),
+            (self.tasks_url, 'tasks/task_list.html', 200),
+            (self.task_url, 'tasks/task_detail.html', 200),
             (self.task_url_invalid_id, '404.html', 404),
             (self.create_task_url, 'tasks/create_task.html', 200),
             (self.update_task_url, 'tasks/update_task.html', 200),

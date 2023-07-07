@@ -1,125 +1,80 @@
-from django.shortcuts import render, redirect
-from django.views import View
 from django.utils.translation import gettext as _
 from django.contrib import messages
-from django.shortcuts import get_object_or_404
+from django_filters.views import FilterView
+from django.views.generic.detail import DetailView
+from django.views.generic.edit import CreateView
+from django.urls import reverse_lazy
+from django.views.generic.edit import UpdateView
+from django.views.generic.edit import DeleteView
 
 from .models import Task
 from .filters import TaskFilter
 from task_manager.mixins import UserLoginRequiredMixin
 from .forms import TaskCreationForm
+from .mixins import TaskDeletionAccessMixin
 
 
-class TaskListView(UserLoginRequiredMixin, View):
+class TaskBaseView:
+    model = Task
+
+
+class TaskListView(UserLoginRequiredMixin, TaskBaseView, FilterView):
     '''Show list of tasks'''
 
-    def get(self, request, *args, **kwargs):
-        tasks = Task.objects.all()
-        filtered_tasks = TaskFilter(
-            request.GET,
-            queryset=tasks,
-            request=request,
-        )
-        button_text = _('Show')
-        return render(
-            request,
-            'tasks/show_tasks.html',
-            context={
-                'filtered_tasks': filtered_tasks,
-                'button_text': button_text,
-            },
-        )
+    filterset_class = TaskFilter
+    template_name = 'tasks/task_list.html'
+    extra_context = {'button_text': _('Show')}
 
 
-class TaskView(UserLoginRequiredMixin, View):
+class TaskView(UserLoginRequiredMixin, TaskBaseView, DetailView):
     '''Show task.'''
 
-    def get(self, request, *args, **kwargs):
-        task_id = kwargs.get('pk')
-        task = get_object_or_404(Task, id=task_id)
-        return render(
-            request,
-            'tasks/task.html',
-            context={'task': task}
-        )
 
-
-class TaskCreateView(UserLoginRequiredMixin, View):
+class TaskCreateView(UserLoginRequiredMixin, TaskBaseView, CreateView):
     '''Create new task.'''
 
-    def get(self, request, *args, **kwargs):
-        form = TaskCreationForm()
-        button_text = _('Create')
-        return render(
-            request,
-            'tasks/create_task.html',
-            context={'form': form, 'button_text': button_text},
+    form_class = TaskCreationForm
+    success_url = reverse_lazy('show_tasks')
+    template_name = 'tasks/create_task.html'
+    extra_context = {'button_text': _('Create')}
+
+    def form_valid(self, form):
+        form.instance.creator = self.request.user
+        messages.success(
+            self.request,
+            _('Task has been created successfully'),
         )
-
-    def post(self, request, *args, **kwargs):
-        form = TaskCreationForm(request.POST)
-        button_text = _('Create')
-
-        if form.is_valid():
-            messages.success(request, _('Task created successfully'))
-            task = form.save(commit=False)
-            task.creator = request.user
-            task.save()
-            form.save_m2m()
-            return redirect('show_tasks')
-        return render(
-            request,
-            'tasks/create_task.html',
-            context={'form': form, 'button_text': button_text},
-        )
+        return super().form_valid(form)
 
 
-class TaskUpdateView(UserLoginRequiredMixin, View):
+class TaskUpdateView(UserLoginRequiredMixin, TaskBaseView, UpdateView):
     '''Update task.'''
 
-    def get(self, request, *args, **kwargs):
-        task_id = kwargs.get('pk')
-        task = get_object_or_404(Task, id=task_id)
-        form = TaskCreationForm(instance=task)
-        button_text = _('Update')
-        return render(
-            request,
-            'tasks/update_task.html',
-            context={'form': form, 'button_text': button_text},
+    form_class = TaskCreationForm
+    success_url = reverse_lazy('show_tasks')
+    template_name = 'tasks/update_task.html'
+    extra_context = {'button_text': _('Update')}
+
+    def form_valid(self, form):
+        messages.success(
+            self.request,
+            _('Task has been updated successfully'),
         )
-
-    def post(self, request, *args, **kwargs):
-        task_id = kwargs.get('pk')
-        task = get_object_or_404(Task, id=task_id)
-        form = TaskCreationForm(request.POST, instance=task)
-        if form.is_valid():
-            messages.success(request, _('Task updated successfully'))
-            form.save()
-            return redirect('show_tasks')
-
-        button_text = _('Update')
-        return render(
-            request,
-            'tasks/update_task.html',
-            context={'form': form, 'button_text': button_text},
-        )
+        return super().form_valid(form)
 
 
-class TaskDeleteView(UserLoginRequiredMixin, View):
+class TaskDeleteView(
+    TaskDeletionAccessMixin,
+    UserLoginRequiredMixin,
+    TaskBaseView,
+    DeleteView,
+):
     '''Delete task.'''
 
-    def get(self, request, *args, **kwargs):
-        task_id = kwargs.get('pk')
-        task = get_object_or_404(Task, id=task_id)
-        return render(
-            request,
-            'tasks/delete_task.html',
-            context={'task': task}
-        )
+    success_url = reverse_lazy('show_tasks')
+    template_name = 'tasks/delete_task.html'
+    extra_context = {'button_text': _('Delete')}
 
     def post(self, request, *args, **kwargs):
-        task_id = kwargs.get('pk')
-        task = get_object_or_404(Task, id=task_id)
-        messages.success(request, _('Task deleted'))
-        task.delete()
-        return redirect('show_tasks')
+        messages.success(self.request, _('Task has been deleted'))
+        return super().post(request)
