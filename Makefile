@@ -7,7 +7,7 @@ start:
 makemigrations:
 	@$(MANAGE) makemigrations
 
-migrate:
+migrate: makemigrations
 	@$(MANAGE) migrate
 
 runserver:
@@ -48,3 +48,8 @@ check: selfcheck lint
 test-coverage:
 	poetry run coverage run --source='task_manager' manage.py test task_manager
 	poetry run coverage xml -o coverage.xml
+
+install: .env
+	@poetry install
+
+build: install migrate
