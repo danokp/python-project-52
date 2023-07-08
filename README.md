@@ -10,11 +10,13 @@ Task Manager - a task management system that
 allows you to create tasks, assign performers, and change their statuses. 
 Registration and authentication are required to work with the system.
 
+If you want to try it follow [the link](https://task-manager-sv61.onrender.com).
+
 ## Installation
 To download and install this project use the following commands:
 ```bash
-git clone https://github.com/danokp/python-project-52.git
-cd python-project-52
+git clone git@github.com:danokp/task-manager.git
+cd task-manager
 ```
 
 ## Usage
@@ -26,6 +28,6 @@ docker compose version
 2. Create `.env` file according to example (`.env.example`)
 3. Run the application:
 ```bash
-docker compose up # Create docker containers and run docker image.
+docker compose up
 ```
 4. Open the application in web browser at [http://localhost:8000](http://localhost:8000).
