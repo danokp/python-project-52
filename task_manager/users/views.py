@@ -11,27 +11,24 @@ from .forms import UserRegistrationForm
 from .models import User
 from .mixins import UserAccessMixin
 from task_manager.tasks.models import Task
-from task_manager.logging_config import logger
 
 
-class UserBaseView:
+class UsersView(ListView):
+    '''Show list of users.'''
+
     model = User
 
 
-class UsersView(UserBaseView, ListView):
-    '''Show list of users.'''
-
-
-class UserFormCreateView(UserBaseView, CreateView):
+class UserCreateView(CreateView):
     '''Create new user.'''
 
+    model = User
     form_class = UserRegistrationForm
     success_url = reverse_lazy('login')
     template_name = 'users/create_user.html'
     extra_context = {'button_text': pgettext('Button name', 'Sign Up')}
 
     def form_valid(self, form):
-        logger.debug('The user has been registered successfully')
         messages.success(
             self.request,
             _('The user has been registered successfully'),
@@ -39,13 +36,13 @@ class UserFormCreateView(UserBaseView, CreateView):
         return super().form_valid(form)
 
     def form_invalid(self, form):
-        logger.error('The user has not been registered')
         return super().form_invalid(form)
 
 
-class UserUpdateView(UserAccessMixin, UserBaseView, UpdateView):
+class UserUpdateView(UserAccessMixin, UpdateView):
     '''Update user profile.'''
 
+    model = User
     form_class = UserRegistrationForm
     success_url = reverse_lazy('show_users')
     template_name = 'users/update_user.html'
@@ -59,9 +56,10 @@ class UserUpdateView(UserAccessMixin, UserBaseView, UpdateView):
         return super().form_valid(form)
 
 
-class UserDeleteView(UserAccessMixin, UserBaseView, DeleteView):
+class UserDeleteView(UserAccessMixin, DeleteView):
     '''Delete user.'''
 
+    model = User
     success_url = reverse_lazy('show_users')
     template_name = 'users/delete_user.html'
     extra_context = {'button_text': _('Delete')}

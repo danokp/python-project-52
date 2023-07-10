@@ -11,17 +11,16 @@ from .forms import LabelCreationForm
 from task_manager.tasks.models import Task
 
 
-class LabelBaseView:
+class LabelView(UserLoginRequiredMixin, ListView):
+    '''Show list of labels.'''
+
     model = Label
 
 
-class LabelView(UserLoginRequiredMixin, LabelBaseView, ListView):
-    '''Show list of labels.'''
-
-
-class LabelCreateView(UserLoginRequiredMixin, LabelBaseView, CreateView):
+class LabelCreateView(UserLoginRequiredMixin, CreateView):
     '''Create new label.'''
 
+    model = Label
     form_class = LabelCreationForm
     success_url = reverse_lazy('show_labels')
     template_name = 'labels/create_label.html'
@@ -35,9 +34,10 @@ class LabelCreateView(UserLoginRequiredMixin, LabelBaseView, CreateView):
         return super().form_valid(form)
 
 
-class LabelUpdateView(UserLoginRequiredMixin, LabelBaseView, UpdateView):
+class LabelUpdateView(UserLoginRequiredMixin, UpdateView):
     '''Update label.'''
 
+    model = Label
     form_class = LabelCreationForm
     success_url = reverse_lazy('show_labels')
     template_name = 'labels/update_label.html'
@@ -51,9 +51,10 @@ class LabelUpdateView(UserLoginRequiredMixin, LabelBaseView, UpdateView):
         return super().form_valid(form)
 
 
-class LabelDeleteView(UserLoginRequiredMixin, LabelBaseView, DeleteView):
+class LabelDeleteView(UserLoginRequiredMixin, DeleteView):
     '''Delete label.'''
 
+    model = Label
     success_url = reverse_lazy('show_labels')
     template_name = 'labels/delete_label.html'
     extra_context = {'button_text': _('Delete')}

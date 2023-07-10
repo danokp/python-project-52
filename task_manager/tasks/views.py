@@ -12,25 +12,25 @@ from .forms import TaskCreationForm
 from .mixins import TaskDeletionAccessMixin
 
 
-class TaskBaseView:
-    model = Task
-
-
-class TaskListView(UserLoginRequiredMixin, TaskBaseView, FilterView):
+class TaskListView(UserLoginRequiredMixin, FilterView):
     '''Show list of tasks'''
 
+    model = Task
     filterset_class = TaskFilter
     template_name = 'tasks/task_list.html'
     extra_context = {'button_text': _('Show')}
 
 
-class TaskView(UserLoginRequiredMixin, TaskBaseView, DetailView):
+class TaskView(UserLoginRequiredMixin, DetailView):
     '''Show task.'''
 
+    model = Task
 
-class TaskCreateView(UserLoginRequiredMixin, TaskBaseView, CreateView):
+
+class TaskCreateView(UserLoginRequiredMixin, CreateView):
     '''Create new task.'''
 
+    model = Task
     form_class = TaskCreationForm
     success_url = reverse_lazy('show_tasks')
     template_name = 'tasks/create_task.html'
@@ -45,9 +45,10 @@ class TaskCreateView(UserLoginRequiredMixin, TaskBaseView, CreateView):
         return super().form_valid(form)
 
 
-class TaskUpdateView(UserLoginRequiredMixin, TaskBaseView, UpdateView):
+class TaskUpdateView(UserLoginRequiredMixin, UpdateView):
     '''Update task.'''
 
+    model = Task
     form_class = TaskCreationForm
     success_url = reverse_lazy('show_tasks')
     template_name = 'tasks/update_task.html'
@@ -64,11 +65,11 @@ class TaskUpdateView(UserLoginRequiredMixin, TaskBaseView, UpdateView):
 class TaskDeleteView(
     TaskDeletionAccessMixin,
     UserLoginRequiredMixin,
-    TaskBaseView,
     DeleteView,
 ):
     '''Delete task.'''
 
+    model = Task
     success_url = reverse_lazy('show_tasks')
     template_name = 'tasks/delete_task.html'
     extra_context = {'button_text': _('Delete')}

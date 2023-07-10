@@ -11,17 +11,16 @@ from .forms import StatusCreationForm
 from task_manager.tasks.models import Task
 
 
-class StatusBaseView:
+class StatusView(UserLoginRequiredMixin, ListView):
+    '''Show list of statuses.'''
+
     model = Status
 
 
-class StatusView(UserLoginRequiredMixin, StatusBaseView, ListView):
-    '''Show list of statuses.'''
-
-
-class StatusCreateView(UserLoginRequiredMixin, StatusBaseView, CreateView):
+class StatusCreateView(UserLoginRequiredMixin, CreateView):
     '''Create new status.'''
 
+    model = Status
     form_class = StatusCreationForm
     success_url = reverse_lazy('show_statuses')
     template_name = 'statuses/create_status.html'
@@ -35,9 +34,10 @@ class StatusCreateView(UserLoginRequiredMixin, StatusBaseView, CreateView):
         return super().form_valid(form)
 
 
-class StatusUpdateView(UserLoginRequiredMixin, StatusBaseView, UpdateView):
+class StatusUpdateView(UserLoginRequiredMixin, UpdateView):
     '''Update status.'''
 
+    model = Status
     form_class = StatusCreationForm
     success_url = reverse_lazy('show_statuses')
     template_name = 'statuses/update_status.html'
@@ -51,9 +51,10 @@ class StatusUpdateView(UserLoginRequiredMixin, StatusBaseView, UpdateView):
         return super().form_valid(form)
 
 
-class StatusDeleteView(UserLoginRequiredMixin, StatusBaseView, DeleteView):
+class StatusDeleteView(UserLoginRequiredMixin, DeleteView):
     '''Delete status.'''
 
+    model = Status
     success_url = reverse_lazy('show_statuses')
     template_name = 'statuses/delete_status.html'
     extra_context = {'button_text': _('Delete')}
