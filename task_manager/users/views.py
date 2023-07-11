@@ -1,7 +1,7 @@
 from django.shortcuts import redirect
 from django.contrib import messages
-from django.utils.translation import gettext as _
-from django.utils.translation import pgettext
+from django.utils.translation import gettext_lazy as _
+from django.utils.translation import pgettext_lazy
 from django.db.models import Q
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.urls import reverse_lazy
@@ -26,7 +26,7 @@ class UserCreateView(CreateView):
     form_class = UserRegistrationForm
     success_url = reverse_lazy('login')
     template_name = 'users/create_user.html'
-    extra_context = {'button_text': pgettext('Button name', 'Sign Up')}
+    extra_context = {'button_text': pgettext_lazy('Button name', 'Sign Up')}
 
     def form_valid(self, form):
         messages.success(

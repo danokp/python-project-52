@@ -1,4 +1,4 @@
-from django.utils.translation import gettext as _
+from django.utils.translation import gettext_lazy as _
 from django.contrib import messages
 from django_filters.views import FilterView
 from django.views.generic.detail import DetailView

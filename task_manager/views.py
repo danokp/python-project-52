@@ -1,7 +1,7 @@
 from django.views.generic.base import TemplateView
 from django.contrib import messages
-from django.utils.translation import gettext as _
-from django.utils.translation import pgettext
+from django.utils.translation import gettext_lazy as _
+from django.utils.translation import pgettext_lazy
 from django.contrib.auth.views import LoginView, LogoutView
 from django.urls import reverse_lazy
 
@@ -15,7 +15,7 @@ class HomePageView(TemplateView):
 class UserLoginView(LoginView):
     '''Authorise the user.'''
     template_name = 'login.html'
-    extra_context = {'button_text': pgettext('Button name', 'Login')}
+    extra_context = {'button_text': pgettext_lazy('Button name', 'Login')}
     success_url = reverse_lazy('homepage')
 
     def form_invalid(self, form):
